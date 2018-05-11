@@ -47,8 +47,8 @@
 
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-								<a class="dropdown-item" href="{{ url('music-comments') }}">
-									music comments
+								<a class="dropdown-item" href="{{ url('posts') }}">
+									posts
 								</a>
 
 								<a class="dropdown-item" href="{{ route('logout') }}"

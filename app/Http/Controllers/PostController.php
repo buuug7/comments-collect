@@ -10,7 +10,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show']);
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     /**
@@ -20,8 +20,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return $posts;
+        $posts = Post::paginate(10);
+        return view('posts.index', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -62,7 +64,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post;
+        return view('posts.show', ['post' => $post,]);
     }
 
     /**
@@ -74,7 +76,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
-        return view('posts.edit',[
+        return view('posts.edit', [
             'post' => $post,
         ]);
     }
@@ -93,8 +95,8 @@ class PostController extends Controller
             'contents' => $request->contents,
             'reference' => $request->reference,
         ]);
-        session()->flash('status','updated success');
-        return redirect('/posts/'.$post->id.'/edit');
+        session()->flash('status', 'updated success');
+        return redirect('/posts/' . $post->id . '/edit');
     }
 
     /**
@@ -105,6 +107,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete',$post);
+        $post->delete();
+        return redirect('/posts');
     }
 }
