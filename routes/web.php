@@ -21,6 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('posts', 'PostController');
 
-Route::get('/test', function (\Illuminate\Http\Request $request) {
+Route::view('/t', 'test');
 
+Route::post('/test', function (\Illuminate\Http\Request $request) {
+    dd($request->file('avatar')->store('public/avatars'));
+});
+
+Route::get('/away',function(){
+    return response()->download('storage/avatars/iVLOAZDh39KQ7K5nV9uJQwaImeRmpibMvvI3AGkM.jpeg','avatar.jpg');
 });

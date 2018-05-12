@@ -9,9 +9,10 @@
 		<ul class="list-unstyled">
 			@foreach ($posts as $post)
 				<li class="bg-white p-3 mb-4">
+					<p>Created by <a href="#">{{ $post->user->name }}</a></p>
 					<p> {{ $post->contents }}</p>
 					<p class="text-muted">Reference:{{ $post->reference }}</p>
-					<p><small>{{ $post->created_at }}</small></p>
+					<p>Laste updated: <small>{{ $post->updated_at }}</small></p>
 					<p class="mb-0">
 						<a href="{{ '/posts/'.$post->id }}" class="btn btn-primary">detail</a>
 					</p>
