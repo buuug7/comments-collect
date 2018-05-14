@@ -12,35 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/posts/{post}/collect', 'PostController@collect');
+
 Route::resource('posts', 'PostController');
 
-Route::resource('tags','TagController');
-
-Route::get('/test', function () {
-    \Illuminate\Support\Facades\Log::emergency('hello world',['a' => 'b',]);
-});
-
-Route::view('/t', 'test')->name('t');
-
-Route::any('/2', function (\Illuminate\Http\Request $request) {
-    \Illuminate\Support\Facades\Validator::make($request->all(), [
-        'name' => [
-            'required',
-            'string',
-            function ($attribute,$value,$fail) {
-                if($value === 'foo'){
-                    return $fail($attribute.' is invalid');
-                }
-            }
-        ],
-        'terms' => 'accepted',
-    ])->validate();
-    return $request->all();
-});
+Route::resource('tags', 'TagController');

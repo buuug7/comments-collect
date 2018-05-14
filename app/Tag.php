@@ -12,11 +12,21 @@ class Tag extends Model
         'name', 'slug', 'user_id'
     ];
 
+
+    /**
+     * the tag owned posts
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function posts()
     {
         return $this->belongsToMany(Post::class);
     }
 
+
+    /**
+     * the tag created user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

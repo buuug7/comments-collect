@@ -27,6 +27,9 @@
 						<button type="submit" class="btn btn-danger">delete</button>
 					</form>
 				@endcan
+				@can('update',$post)
+					<a href="{{ url('/posts/'.$post->id.'/edit') }}" class="btn btn-success">edit</a>
+				@endcan
 			</div>
 		</div>
 	</div>

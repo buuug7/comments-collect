@@ -27,8 +27,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * user created posts
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+
+    /**
+     * user collected posts
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function collectedPosts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }

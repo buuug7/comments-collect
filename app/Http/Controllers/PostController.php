@@ -21,10 +21,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
-        return view('posts.index', [
-            'posts' => $posts,
-        ]);
+        $posts = Post::with('user')->latest()->get();
+        return response()->json($posts);
     }
 
     /**
@@ -76,7 +74,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', ['post' => $post,]);
+        $result = $post->load(['user','collectedUsers']);
+        return response()->json($result);
+
     }
 
     /**
@@ -120,7 +120,7 @@ class PostController extends Controller
             $post->tags()->attach($request->tags);
         }
 
-        return redirect()->action('PostController@edit', ['id' => $post,])
+        return redirect()->action('PostController@show', ['id' => $post,])
             ->with('status', 'updated success');
     }
 
@@ -136,5 +136,16 @@ class PostController extends Controller
         $post->delete();
         return redirect()->action('PostController@index')
             ->with('status', 'deleted success!');
+    }
+
+    // more // more // more //
+
+
+    public function collect(Request $request, Post $post)
+    {
+        $result = $request->user()->collectedPosts()->toggle($post->id);
+
+        return Post::find($post->id)->load(['user','collectedUsers']);
+        return $result;
     }
 }
