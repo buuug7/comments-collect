@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\PostsIndexComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

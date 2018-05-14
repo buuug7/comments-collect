@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -33,7 +34,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', [
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -44,16 +48,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'contents' => 'required',
+            'reference' => 'required',
         ]);
         $post = Post::create([
             'contents' => $request->contents,
             'reference' => $request->reference,
             'user_id' => $request->user()->id,
         ]);
-        session()->flash('status', 'created success');
-        return redirect('/posts/' . $post->id);
+
+        if ($request->tags) {
+            $post->tags()->attach($request->tags);
+        }
+
+        return redirect()
+            ->action('PostController@show', ['id' => $post,])
+            ->with('status', 'created success');
     }
 
     /**
@@ -75,9 +87,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $tags = Tag::all();
         return view('posts.edit', [
             'post' => $post,
+            'tags' => $tags,
         ]);
     }
 
@@ -90,13 +103,25 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $this->validate($request, [
+            'contents' => 'required',
+            'reference' => 'required',
+        ]);
+
         $post->update([
             'contents' => $request->contents,
             'reference' => $request->reference,
         ]);
-        session()->flash('status', 'updated success');
-        return redirect('/posts/' . $post->id . '/edit');
+
+        if ($request->tags) {
+            $post->tags()->detach();
+            $post->tags()->attach($request->tags);
+        }
+
+        return redirect()->action('PostController@edit', ['id' => $post,])
+            ->with('status', 'updated success');
     }
 
     /**
@@ -107,8 +132,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $this->authorize('delete',$post);
+        $this->authorize('delete', $post);
         $post->delete();
-        return redirect('/posts');
+        return redirect()->action('PostController@index')
+            ->with('status', 'deleted success!');
     }
 }

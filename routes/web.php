@@ -21,12 +21,26 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('posts', 'PostController');
 
-Route::view('/t', 'test');
+Route::resource('tags','TagController');
 
-Route::post('/test', function (\Illuminate\Http\Request $request) {
-    dd($request->file('avatar')->store('public/avatars'));
+Route::get('/test', function () {
+    \Illuminate\Support\Facades\Log::emergency('hello world',['a' => 'b',]);
 });
 
-Route::get('/away',function(){
-    return response()->download('storage/avatars/iVLOAZDh39KQ7K5nV9uJQwaImeRmpibMvvI3AGkM.jpeg','avatar.jpg');
+Route::view('/t', 'test')->name('t');
+
+Route::any('/2', function (\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Validator::make($request->all(), [
+        'name' => [
+            'required',
+            'string',
+            function ($attribute,$value,$fail) {
+                if($value === 'foo'){
+                    return $fail($attribute.' is invalid');
+                }
+            }
+        ],
+        'terms' => 'accepted',
+    ])->validate();
+    return $request->all();
 });

@@ -2,24 +2,30 @@
 
 @section('content')
 	<div class="container">
-		<form action="/test" method="post" enctype="multipart/form-data">
+		{{ $errors }}
+		<form action="/2" method="post" enctype="multipart/form-data">
 			@csrf
 			<div class="form-group">
 				<label for="name">name</label>
 				<input type="text"
 					   class="form-control" name="name" id="name">
 			</div>
-			<div class="form-group">
-				<label for="favorites">Favorites</label>
-				<select class="form-control" name="favorites" id="favorites">
-					<option value="fav1">fav1</option>
-					<option value="fav2">fav2</option>
-					<option value="fav3">fav3</option>
-				</select>
-			</div>
+
 			<div class="form-group">
 				<label for="avatar">avatar</label>
-				<input type="file" class="form-control-file" name="avatar" id="avatar" placeholder="sfsdf" aria-describedby="fileHelpId">
+				<input type="file" class="form-control-file" name="avatar" id="avatar" placeholder="avatar" aria-describedby="fileHelpId">
+			</div>
+			<div class="form-group">
+				<label for="ip">IP</label>
+				<input type="ip" class="form-control" name="ip" id="ip">
+			</div>
+
+
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input type="checkbox" class="form-check-input" name="terms" id="terms">
+					I agree with <a href="#">Terms</a>
+				</label>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
