@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->latest()->get();
+        $posts = Post::with(['user','collectedUsers'])->latest()->get();
         return response()->json($posts);
     }
 
@@ -74,7 +74,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $result = $post->load(['user','collectedUsers']);
+        $result = $post->load(['user', 'collectedUsers']);
         return response()->json($result);
 
     }
@@ -134,8 +134,9 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $post->delete();
-        return redirect()->action('PostController@index')
-            ->with('status', 'deleted success!');
+        return response()->json([
+            'message' => 'deleted success',
+        ]);
     }
 
     // more // more // more //
@@ -145,7 +146,6 @@ class PostController extends Controller
     {
         $result = $request->user()->collectedPosts()->toggle($post->id);
 
-        return Post::find($post->id)->load(['user','collectedUsers']);
-        return $result;
+        return Post::find($post->id)->load(['user', 'collectedUsers']);
     }
 }
