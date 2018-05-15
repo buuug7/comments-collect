@@ -17,7 +17,8 @@ class Post extends Model
 
     protected $appends = [
         'has_collected_by_request_user',
-        'has_owned_by_request_user'
+        'has_owned_by_request_user',
+        'collected_users_count',
     ];
 
     /**
@@ -49,7 +50,7 @@ class Post extends Model
     }
 
     /**
-     * append attribute has_collected_by_request_user
+     * append attribute [has_collected_by_request_user]
      * detect whether the post is collected by request user
      * @return bool|mixed
      */
@@ -61,7 +62,7 @@ class Post extends Model
     }
 
     /**
-     * append attribute has_owned_by_request_user
+     * append attribute [has_owned_by_request_user]
      * detect whether the post is owned by request user
      * @return bool
      */
@@ -72,6 +73,15 @@ class Post extends Model
         }
     }
 
+    /**
+     * append attribute [collected_users_count]
+     * get the collected users count
+     * @return int
+     */
+    public function getCollectedUsersCountAttribute()
+    {
+        return $this->collectedUsers()->count();
+    }
 
     /**
      * detect the post is collected by a given user

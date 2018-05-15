@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -21,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user','collectedUsers'])->latest()->get();
+        $posts = Post::with(['user', 'tags'])->latest()->paginate(5);
         return response()->json($posts);
     }
 
@@ -74,7 +75,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $result = $post->load(['user', 'collectedUsers']);
+        $result = $post->load(['user', 'tags']);
         return response()->json($result);
 
     }
@@ -115,13 +116,26 @@ class PostController extends Controller
             'reference' => $request->reference,
         ]);
 
-        if ($request->tags) {
+        if (count($request->tagsArray) > 0) {
+
             $post->tags()->detach();
-            $post->tags()->attach($request->tags);
+            foreach ($request->tagsArray as $tag) {
+                $t = Tag::firstOrCreate(
+                    ['name' => $tag],
+                    [
+                        'slug' => str_slug($tag),
+                        'user_id' => $request->user()->id
+                    ]
+                );
+                $post->tags()->attach($t->id);
+            }
+        } else {
+            $post->tags()->detach();
         }
 
-        return redirect()->action('PostController@show', ['id' => $post,])
-            ->with('status', 'updated success');
+        $result = $post->load(['user', 'tags']);
+
+        return response()->json($result);
     }
 
     /**
@@ -146,6 +160,6 @@ class PostController extends Controller
     {
         $result = $request->user()->collectedPosts()->toggle($post->id);
 
-        return Post::find($post->id)->load(['user', 'collectedUsers']);
+        return Post::find($post->id)->load(['user', 'tags']);
     }
 }
