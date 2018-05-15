@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
-				<posts-component></posts-component>
+				<post-create-component></post-create-component>
 			</div>
 		</div>
 

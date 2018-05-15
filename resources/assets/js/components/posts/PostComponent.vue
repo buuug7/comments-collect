@@ -50,7 +50,6 @@
                 </ul>
             </div>
         </div>
-
         <!-- Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
             <div class="modal-dialog">
@@ -112,19 +111,27 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div v-else class="mb-5">
+        <content-placeholders>
+            <content-placeholders-text :lines="3" />
+        </content-placeholders>
     </div>
 </template>
 
 <script>
   import InputTag from 'vue-input-tag';
 
+  import {
+    ContentLoader,
+  } from 'vue-content-loader'
+
   export default {
     props: ['post'],
     data() {
       return {
         errors: [],
-        postClone: this.post,
+        postClone: null,
         editForm: {
           errors: [],
           reference: '',
@@ -134,11 +141,12 @@
         },
       };
     },
-    /*mounted() {
-      axios.get(`/posts/${this.id}`).then(response => {
-        this.post = response.data;
-      });
-    },*/
+    mounted() {
+
+      setTimeout(()=>{
+        this.postClone = this.post;
+      },1000)
+    },
     methods: {
       comment() {
       },

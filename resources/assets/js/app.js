@@ -9,6 +9,11 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// add
+import VueContentPlaceholders from 'vue-content-placeholders';
+Vue.use(VueContentPlaceholders);
+// end add
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -18,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('post-component',require('./components/posts/PostComponent.vue'));
 Vue.component('posts-component',require('./components/posts/PostsComponent.vue'));
+Vue.component('post-create-component',require('./components/posts/PostCreateComponent.vue'));
 
 
 const app = new Vue({

@@ -9,7 +9,7 @@
             <a href="#"
                @click.prevent="more"
                ref="moreButton"
-               class="btn btn-outline-primary">More</a>
+               class="btn btn-outline-primary">Load More</a>
         </div>
     </div>
 </template>
@@ -39,7 +39,7 @@
           this.posts = this.posts.concat(response.data.data);
           if (response.data.next_page_url) {
             this.nextPageUrl = response.data.next_page_url;
-            moreButton.textContent = 'More';
+            moreButton.textContent = 'Load More';
           } else {
             moreButton.classList.add('disabled');
             moreButton.setAttribute('disabled', 'disabled');

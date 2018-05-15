@@ -58,13 +58,26 @@ class PostController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        if ($request->tags) {
-            $post->tags()->attach($request->tags);
+        if (count($request->tagsArray) > 0) {
+
+            $post->tags()->detach();
+            foreach ($request->tagsArray as $tag) {
+                $t = Tag::firstOrCreate(
+                    ['name' => $tag],
+                    [
+                        'slug' => str_slug($tag),
+                        'user_id' => $request->user()->id
+                    ]
+                );
+                $post->tags()->attach($t->id);
+            }
+        } else {
+            $post->tags()->detach();
         }
 
-        return redirect()
-            ->action('PostController@show', ['id' => $post,])
-            ->with('status', 'created success');
+        $result = $post->load(['user', 'tags']);
+
+        return response()->json($result);
     }
 
     /**
