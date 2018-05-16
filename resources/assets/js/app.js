@@ -20,7 +20,6 @@ Vue.use(VueContentPlaceholders);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('post-component',require('./components/posts/PostComponent.vue'));
 Vue.component('posts-component',require('./components/posts/PostsComponent.vue'));
 Vue.component('post-create-component',require('./components/posts/PostCreateComponent.vue'));

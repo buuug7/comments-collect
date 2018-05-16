@@ -7,7 +7,7 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'user_id' => function(){
             return factory(App\User::class)->create()->id;
         },
-        'contents' => $faker->text,
+        'contents' => $faker->text(300),
         'reference' => $faker->url,
     ];
 });

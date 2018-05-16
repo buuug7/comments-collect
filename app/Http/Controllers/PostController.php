@@ -134,9 +134,9 @@ class PostController extends Controller
             $post->tags()->detach();
             foreach ($request->tagsArray as $tag) {
                 $t = Tag::firstOrCreate(
-                    ['name' => $tag],
+                    ['slug' => str_slug($tag)],
                     [
-                        'slug' => str_slug($tag),
+                        'name' => $tag,
                         'user_id' => $request->user()->id
                     ]
                 );
@@ -169,9 +169,15 @@ class PostController extends Controller
     // more // more // more //
 
 
-    public function collect(Request $request, Post $post)
+    /**
+     * [User $user] star or dis star a [Post $post]
+     * @param Request $request
+     * @param Post $post
+     * @return mixed
+     */
+    public function star(Request $request, Post $post)
     {
-        $result = $request->user()->collectedPosts()->toggle($post->id);
+        $result = $request->user()->staredPosts()->toggle($post->id);
 
         return Post::find($post->id)->load(['user', 'tags']);
     }

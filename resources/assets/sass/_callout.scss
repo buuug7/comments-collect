@@ -1,0 +1,54 @@
+//
+// Callouts
+// --------------------------------------------------
+
+$callout-padding:               20px;
+$callout-border-radius:         $border-radius;
+
+.callout {
+  margin-bottom: 20px;
+  padding: $callout-padding;
+  border-left: 3px solid $gray-300;
+  background-color: rgba(0,0,0,0.03);
+  h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size:20px;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.callout-success {
+  background-color: lighten(theme-color("success"),55%);
+  border-color: lighten(theme-color("success"),45%);
+  h4 {
+    color: theme-color("success");
+  }
+}
+
+
+.callout-info {
+  background-color: lighten(theme-color("info"),55%);
+  border-color: lighten(theme-color("info"),45%);
+  h4 {
+    color: theme-color("info");
+  }
+}
+.callout-warning {
+  background-color: lighten(theme-color("warning"),45%);
+  border-color: lighten(theme-color("warning"),35%);
+  h4 {
+    color: theme-color("warning");
+  }
+}
+
+
+.callout-danger {
+  background-color: lighten(theme-color("danger"),42%);
+  border-color: lighten(theme-color("danger"),35%);
+  h4 {
+    color: theme-color("danger");
+  }
+}

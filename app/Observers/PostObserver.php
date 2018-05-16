@@ -8,6 +8,6 @@ class PostObserver
 {
     public function deleting(Post $post)
     {
-        $post->collectedUsers()->detach();
+        $post->staredUsers()->detach();
     }
 }

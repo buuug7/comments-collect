@@ -38,11 +38,11 @@ class User extends Authenticatable
 
 
     /**
-     * user collected posts
+     * user stared posts
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function collectedPosts()
+    public function staredPosts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class,'post_user_stars');
     }
 }
