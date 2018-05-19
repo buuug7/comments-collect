@@ -95,4 +95,13 @@ class CommentController extends Controller
     {
         //
     }
+
+    public function like(Request $request, Comment $comment)
+    {
+        $request->user()->likedComments()->toggle($comment->id);
+
+        $result = Comment::find($comment->id)->load(['user']);
+
+        return response()->json($result);
+    }
 }

@@ -10,6 +10,11 @@
         justify-content: flex-start;
     }
 
+    .comment__header-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
     .comment__header-author {
         display: flex;
         flex-direction: column;
@@ -133,10 +138,10 @@
                                 >comment</a>
                             </form>
                         </div>
-                        <div v-if="comments.length >0" v-for="comment in comments"
+                        <div v-if="comments.length >0" v-for="(comment,index) in comments"
                              class="comment mb-4">
                             <div class="comment__header mb-2">
-                                <img src="https://avatars3.githubusercontent.com/u/12119289?s=50&v=4" class="comment__header-avatar mr-3" alt="">
+                                <img src="/images/avatar.jpg" class="comment__header-avatar mr-3" alt="">
                                 <div class="comment__header-author">
                                     <span>{{ comment.user.name }}</span>
                                     <span class="text-muted small">{{ comment.created_at }}</span>
@@ -147,10 +152,15 @@
                             </div>
                             <div class="comment__actions mb-2">
                                 <div class="comment__action-likes mr-3">
-                                    <a href="javascript:" class="mr-1">
-                                        <i class="fa fa-thumbs-o-up"></i>
+                                    <a href="javascript:"
+                                       @click.prevent="likeComment(comment,index)"
+                                       class="mr-1">
+                                        <i v-if="comment.has_liked_by_request_user" class="fa fa-thumbs-up"></i>
+                                        <i v-else class="fa fa-thumbs-o-up"></i>
                                     </a>
-                                    <span class="like-counts small text-muted">9999</span>
+                                    <span class="like-counts small text-muted">
+                                        {{ comment.like_count}}
+                                    </span>
                                 </div>
                                 <div class="comment__action-replay">
                                     <a href="javascript:" @click.prevent="toggleReplyForm(comment)">
@@ -166,6 +176,14 @@
                                     <a href="javascript:" class="btn btn-primary">reply</a>
                                 </form>
                             </div>
+                        </div>
+                        <div class="more-comments text-center">
+                            <a href="javascript:"
+                               @click.prevent="loadMoreComments"
+                               ref="moreComments"
+                               class="btn btn-outline-primary">
+                                Load more comments
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -265,6 +283,7 @@
           tagsArray: [],
         },
         comments: [],
+        nextCommentsUrl: null,
         showComments: false,
         commentCreateForm: {
           errors: [],
@@ -332,10 +351,31 @@
 
       loadComments() {
         axios.get(`/posts/${this.postClone.id}/comments`).then(response => {
-          this.comments = response.data;
-          console.log('loaded finished');
+          this.comments = response.data.data;
+          this.nextCommentsUrl = response.data.next_page_url;
+          console.log(response.data.data);
         });
-
+      },
+      loadMoreComments() {
+        let moreCommentsBtn = this.$refs.moreComments;
+        moreCommentsBtn.textContent = 'loading...';
+        if (!this.nextCommentsUrl) {
+          moreCommentsBtn.classList.add('disabled');
+          moreCommentsBtn.setAttribute('disabled', 'disabled');
+          moreCommentsBtn.textContent = 'No more';
+        }
+        axios.get(this.nextCommentsUrl).then(response => {
+          this.comments = this.comments.concat(response.data.data);
+          if (response.data.next_page_url) {
+            this.nextCommentsUrl = response.data.next_page_url;
+            moreCommentsBtn.textContent = 'Load more comments';
+          } else {
+            this.nextCommentsUrl = null;
+            moreCommentsBtn.classList.add('disabled');
+            moreCommentsBtn.setAttribute('disabled', 'disabled');
+            moreCommentsBtn.textContent = 'No more';
+          }
+        });
       },
 
       toggleComments() {
@@ -379,10 +419,18 @@
         });
 
       },
+      likeComment(comment, index) {
+        axios.post(`/comments/${comment.id}/like`).then(response => {
+          Vue.set(this.comments, index, response.data);
+        });
+      }
+
     },
     components: {
       InputTag,
     },
   }
+
+  /* TODO::extract comments to single component*/
 
 </script>

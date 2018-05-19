@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Comment extends Model
 {
@@ -16,7 +17,8 @@ class Comment extends Model
     ];
 
     protected $appends = [
-        'like_count'
+        'like_count',
+        'has_liked_by_request_user'
     ];
 
     /**
@@ -80,9 +82,42 @@ class Comment extends Model
     }
 
 
+    /**
+     * append attribute [like_count]
+     * get the liked user count
+     * @return int
+     */
     public function getLikeCountAttribute()
     {
         return $this->likedUsers()->count();
+    }
+
+    /**
+     * append attribute [has_liked_by_request_user]
+     * detect where the comment is liked by request user
+     * @return bool
+     */
+    public function getHasLikedByRequestUserAttribute()
+    {
+        if (Auth::check()) {
+            return $this->hasLikedByGivenUser(Auth::user());
+        }
+        return false;
+    }
+
+
+    /**
+     * detect the comment is owned by given user
+     * @param User $user
+     * @return bool
+     */
+    public function hasLikedByGivenUser(User $user)
+    {
+        $exists = self::whereHas('likedUsers', function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('comment_id', $this->id);
+        })->exists();
+        return $exists;
     }
 
 

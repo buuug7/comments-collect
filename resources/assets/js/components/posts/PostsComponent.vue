@@ -49,6 +49,7 @@
             this.nextPageUrl = response.data.next_page_url;
             moreButton.textContent = 'Load More';
           } else {
+            this.nextPageUrl = null;
             moreButton.classList.add('disabled');
             moreButton.setAttribute('disabled', 'disabled');
             moreButton.textContent = 'No more';

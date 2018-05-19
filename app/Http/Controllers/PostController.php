@@ -185,7 +185,7 @@ class PostController extends Controller
 
     public function comments(Request $request, Post $post)
     {
-        $result = $post->comments()->latest()->with('user')->get();
+        $result = $post->comments()->latest()->with('user')->simplePaginate(5);
         return response()->json($result);
     }
 }

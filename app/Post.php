@@ -75,6 +75,7 @@ class Post extends Model
         if (Auth::check()) {
             return $this->hasStaredByGivenUser(Auth::user());
         }
+        return false;
     }
 
     /**
@@ -87,6 +88,7 @@ class Post extends Model
         if (Auth::check()) {
             return $this->hasOwnedByGivenUser(Auth::user());
         }
+        return false;
     }
 
     /**
