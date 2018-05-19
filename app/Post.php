@@ -16,6 +16,7 @@ class Post extends Model
     ];
 
     protected $appends = [
+        'comments_count',
         'has_stared_by_request_user',
         'has_owned_by_request_user',
         'stared_users_count',
@@ -56,6 +57,12 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments()->count();
     }
 
     /**

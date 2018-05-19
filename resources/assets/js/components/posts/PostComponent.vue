@@ -94,7 +94,7 @@
                         <a href="#"
                            @click.prevent="toggleComments"
                            class="btn btn-outline-primary mb-2">
-                            Comments ( 999 )
+                            Comments ( {{ postClone.comments_count }} )
                         </a>
                         <a href="#"
                            v-if="postClone.has_owned_by_request_user"
