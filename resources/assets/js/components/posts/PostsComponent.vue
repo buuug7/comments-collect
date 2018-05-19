@@ -26,15 +26,23 @@
     },
     mounted() {
       axios.get('/posts').then(response => {
-        console.log(response.data);
         this.posts = response.data.data;
         this.nextPageUrl = response.data.next_page_url;
       });
     },
     methods: {
       more(e) {
+
         let moreButton = this.$refs.moreButton;
         moreButton.textContent = 'loading...';
+
+        if (!this.nextPageUrl) {
+          moreButton.classList.add('disabled');
+          moreButton.setAttribute('disabled', 'disabled');
+          moreButton.textContent = 'No more';
+          return;
+        }
+
         axios.get(this.nextPageUrl).then(response => {
           this.posts = this.posts.concat(response.data.data);
           if (response.data.next_page_url) {

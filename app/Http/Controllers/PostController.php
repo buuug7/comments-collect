@@ -181,4 +181,11 @@ class PostController extends Controller
 
         return Post::find($post->id)->load(['user', 'tags']);
     }
+
+
+    public function comments(Request $request, Post $post)
+    {
+        $result = $post->comments()->latest()->with('user')->get();
+        return response()->json($result);
+    }
 }

@@ -36,6 +36,34 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * user created comments
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
+    /**
+     * get all of replied comments posted by the user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function byRepliedComments()
+    {
+        return $this->hasMany(Comment::class, 'target_user_id');
+    }
+
+    /**
+     * return the comments of user liked (thumbs up)
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'comment_user_likes');
+    }
+
 
     /**
      * user stared posts
@@ -43,6 +71,7 @@ class User extends Authenticatable
      */
     public function staredPosts()
     {
-        return $this->belongsToMany(Post::class,'post_user_stars');
+        return $this->belongsToMany(Post::class, 'post_user_stars');
     }
+
 }

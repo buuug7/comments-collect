@@ -30,6 +30,15 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * the post comments
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
     /**
      * the post stared by users
@@ -37,7 +46,7 @@ class Post extends Model
      */
     public function staredUsers()
     {
-        return $this->belongsToMany(User::class,'post_user_stars');
+        return $this->belongsToMany(User::class, 'post_user_stars');
     }
 
     /**

@@ -24,7 +24,9 @@ Route::get('/post-create', function () {
 })->name('post-create')->middleware('auth');
 
 Route::post('/posts/{post}/star', 'PostController@star');
-
+Route::get('/posts/{post}/comments', 'PostController@comments');
 Route::resource('posts', 'PostController');
 
 Route::resource('tags', 'TagController');
+
+Route::resource('comments','CommentController');
