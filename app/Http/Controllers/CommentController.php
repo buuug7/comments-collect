@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -123,6 +128,9 @@ class CommentController extends Controller
      */
     public function reply(Request $request, Comment $comment)
     {
+        $this->validate($request,[
+            'contents' => 'required',
+        ]);
         $replyComment = Comment::create([
             'contents' => $request->contents,
             'post_id' => $request->post_id,

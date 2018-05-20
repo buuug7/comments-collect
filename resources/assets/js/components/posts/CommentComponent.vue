@@ -95,6 +95,14 @@
                     </a>
                 </div>
             </div>
+            <!-- display errors -->
+            <div v-if="errors.length>0" class="alert alert-danger m-4">
+                <ul class="mb-0">
+                    <li v-for="error in errors">
+                        {{ error }}
+                    </li>
+                </ul>
+            </div>
             <div class="comment__replay" :id="'comment-reply-'+commentClone.id">
                 <form>
                     <div class="form-group">
@@ -112,8 +120,8 @@
         </div>
         <div v-else class="mb-5">
             <content-placeholders>
-                <content-placeholders-heading :img="true" />
-                <content-placeholders-text :lines="2" />
+                <content-placeholders-heading :img="true"/>
+                <content-placeholders-text :lines="2"/>
             </content-placeholders>
         </div>
     </div>
@@ -127,8 +135,8 @@
       return {
         commentClone: null,
         deleted: false,
+        errors: [],
         replyForm: {
-          errors: [],
           contents: '',
           post_id: null,
           // user_id: null,
@@ -156,6 +164,13 @@
         axios.post(`/comments/${this.comment.id}/like`).then(response => {
           //Vue.set(this.comments, index, response.data);
           this.commentClone = response.data;
+        }).catch(error => {
+          if (typeof error.response.data === 'object') {
+            this.errors = _.flatten(_.toArray(error.response.data.errors));
+            this.errors.push(error.response.data.message);
+          } else {
+            this.errors = ['something went wrong, please try again.'];
+          }
         });
       },
       reply() {
@@ -169,6 +184,14 @@
           this.replyForm.target_user_id = null;
           this.replyForm.target_comment_id = null;
           this.toggleReplyForm();
+        }).catch(error => {
+          console.log(error.response);
+          if (typeof error.response.data === 'object') {
+            this.errors = _.flatten(_.toArray(error.response.data.errors));
+            this.errors.push(error.response.data.message);
+          } else {
+            this.errors = ['something went wrong, please try again.'];
+          }
         });
       },
       deleteComment() {
