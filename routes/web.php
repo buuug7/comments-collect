@@ -30,4 +30,5 @@ Route::resource('posts', 'PostController');
 Route::resource('tags', 'TagController');
 
 Route::post('/comments/{comment}/like','CommentController@like');
+Route::post('/comments/{comment}/reply','CommentController@reply');
 Route::resource('comments','CommentController');

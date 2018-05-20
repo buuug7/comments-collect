@@ -10431,6 +10431,19 @@ a.text-dark:focus {
           box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 }
 
+.blockquote-v1 {
+  padding: 0 1rem;
+  border-left: 0.25em solid #e9ecef;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  color: #6c757d;
+  font-weight: 300;
+}
+
+.blockquote-v1 > :first-child {
+  margin-top: 0;
+}
+
 body {
   font-size: 1rem;
 }

@@ -1,52 +1,33 @@
-<style lang="scss" scoped>
-    .comment {
-        display: flex;
-        flex-direction: column;
+<style scoped lang="scss">
+    .post__content {
+        position: relative;
+        overflow: hidden;
     }
 
-    .comment__header {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
+    .post__content-more_overlay {
+        position: absolute;
+        display: none;
+        flex-flow: row wrap;
+        justify-content: center;
+        bottom: 0;
+        width: 100%;
+        background-image: linear-gradient(
+                        rgba(255, 255, 255, 0.2),
+                        rgba(255, 255, 255, 0.4),
+                        rgba(255, 255, 255, 0.6),
+                        rgba(255, 255, 255, 0.8),
+                        rgba(255, 255, 255, 1)
+        );
+        padding: 40px 0 0 0;
+        > a {
+            color: #616161;
 
-    .comment__header-avatar {
-        width: 50px;
-        height: 50px;
-    }
-
-    .comment__header-author {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .comment__body {
-        p:last-child {
-            margin-bottom: 0;
+        }
+        > a:hover {
+            text-decoration: none;
         }
     }
-
-    .comment__actions {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .comment__actions-likes {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .comment__replay {
-        display: none;
-    }
-
-    .create-comment {
-
-    }
 </style>
-
 <template>
     <div v-if="!deleted">
         <div v-if="postClone">
@@ -64,7 +45,16 @@
                         </ul>
                     </div>
 
-                    <div class="post__content mb-4">{{ postClone.contents }}</div>
+                    <div class="post__content mb-4" ref="postContents">
+                        <div>{{ postClone.contents }}</div>
+                        <div class="post__content-more_overlay">
+                            <a href="javascript:"
+                               @click="showMore"
+                               class="more-button-1">
+                                view more <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                    </div>
 
                     <div class="callout callout-warning post__reference">
                         <h4>Reference</h4>
@@ -111,81 +101,10 @@
                            class="btn btn-outline-danger mb-2">Delete</a>
 
                     </div>
-
-                    <div class="comments" v-if="showComments">
-                        <h3 class="mb-4">Comments ({{ comments.length }})</h3>
-                        <div class="create-comment mb-4">
-                            <!-- Form Errors -->
-                            <div class="alert alert-danger" v-if="commentCreateForm.errors.length > 0">
-                                <ul class="mb-0">
-                                    <li v-for="error in commentCreateForm.errors">
-                                        {{ error }}
-                                    </li>
-                                </ul>
-                            </div>
-                            <form>
-                                <div class="form-group">
-                                    <textarea
-                                            class="form-control"
-                                            name="newComment"
-                                            placeholder="add new comment"
-                                            v-model="commentCreateForm.contents"
-                                    ></textarea>
-                                </div>
-                                <a href="javascript:"
-                                   class="btn btn-primary"
-                                   @click.prevent="addNewComment"
-                                >comment</a>
-                            </form>
-                        </div>
-                        <div v-if="comments.length >0" v-for="(comment,index) in comments"
-                             class="comment mb-4">
-                            <div class="comment__header mb-2">
-                                <img src="/images/avatar.jpg" class="comment__header-avatar mr-3" alt="">
-                                <div class="comment__header-author">
-                                    <span>{{ comment.user.name }}</span>
-                                    <span class="text-muted small">{{ comment.created_at }}</span>
-                                </div>
-                            </div>
-                            <div class="comment__body mb-2">
-                                <p>{{ comment.contents }}</p>
-                            </div>
-                            <div class="comment__actions mb-2">
-                                <div class="comment__action-likes mr-3">
-                                    <a href="javascript:"
-                                       @click.prevent="likeComment(comment,index)"
-                                       class="mr-1">
-                                        <i v-if="comment.has_liked_by_request_user" class="fa fa-thumbs-up"></i>
-                                        <i v-else class="fa fa-thumbs-o-up"></i>
-                                    </a>
-                                    <span class="like-counts small text-muted">
-                                        {{ comment.like_count}}
-                                    </span>
-                                </div>
-                                <div class="comment__action-replay">
-                                    <a href="javascript:" @click.prevent="toggleReplyForm(comment)">
-                                        <i class="fa fa-reply"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="comment__replay" :id="'comment-reply-'+comment.id">
-                                <form action="">
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="replay"></textarea>
-                                    </div>
-                                    <a href="javascript:" class="btn btn-primary">reply</a>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="more-comments text-center">
-                            <a href="javascript:"
-                               @click.prevent="loadMoreComments"
-                               ref="moreComments"
-                               class="btn btn-outline-primary">
-                                Load more comments
-                            </a>
-                        </div>
-                    </div>
+                    <CommentsComponent
+                            v-if="showComments"
+                            :post_id="postClone.id">
+                    </CommentsComponent>
                 </div>
 
                 <div class="card-footer text-muted">
@@ -266,7 +185,7 @@
 <script>
   import InputTag from 'vue-input-tag';
 
-  import {ContentLoader} from 'vue-content-loader'
+  import CommentsComponent from './CommentsComponent.vue';
 
   export default {
     props: ['post'],
@@ -282,27 +201,24 @@
           tags: [],
           tagsArray: [],
         },
-        comments: [],
-        nextCommentsUrl: null,
         showComments: false,
-        commentCreateForm: {
-          errors: [],
-          contents: '',
-          post_id: null,
-          // user_id: null,
-          target_user_id: null,
-          target_comment_id: null,
-        }
       };
     },
     mounted() {
-
       setTimeout(() => {
         this.postClone = this.post;
-      }, 1000)
+        this.$nextTick(() => {
+          this.checkContentsHeight();
+        })
+      }, 1000);
+
+
+    },
+    components: {
+      InputTag,
+      CommentsComponent,
     },
     methods: {
-
       star() {
         axios.post(`/posts/${this.post.id}/star`).then(response => {
           this.postClone = response.data;
@@ -349,88 +265,28 @@
         });
       },
 
-      loadComments() {
-        axios.get(`/posts/${this.postClone.id}/comments`).then(response => {
-          this.comments = response.data.data;
-          this.nextCommentsUrl = response.data.next_page_url;
-          console.log(response.data.data);
-        });
-      },
-      loadMoreComments() {
-        let moreCommentsBtn = this.$refs.moreComments;
-        moreCommentsBtn.textContent = 'loading...';
-        if (!this.nextCommentsUrl) {
-          moreCommentsBtn.classList.add('disabled');
-          moreCommentsBtn.setAttribute('disabled', 'disabled');
-          moreCommentsBtn.textContent = 'No more';
-        }
-        axios.get(this.nextCommentsUrl).then(response => {
-          this.comments = this.comments.concat(response.data.data);
-          if (response.data.next_page_url) {
-            this.nextCommentsUrl = response.data.next_page_url;
-            moreCommentsBtn.textContent = 'Load more comments';
-          } else {
-            this.nextCommentsUrl = null;
-            moreCommentsBtn.classList.add('disabled');
-            moreCommentsBtn.setAttribute('disabled', 'disabled');
-            moreCommentsBtn.textContent = 'No more';
-          }
-        });
-      },
-
       toggleComments() {
         if (!this.showComments) {
-          this.loadComments();
           this.showComments = !this.showComments;
         } else {
           this.showComments = !this.showComments;
-          this.comments = [];
-        }
-
-      },
-
-      toggleReplyForm(comment) {
-        let replyForm = document.querySelector(`#comment-reply-${comment.id}`);
-
-        if (replyForm.style.display === 'none') {
-          replyForm.style.display = 'block';
-        } else {
-          replyForm.style.display = 'none';
         }
       },
 
-      addNewComment() {
-        this.commentCreateForm.post_id = this.postClone.id;
-        axios.post('/comments', this.commentCreateForm).then(response => {
-          this.commentCreateForm.contents = '';
-          this.commentCreateForm.post_id = null;
-          //this.commentCreateForm.user_id = null;
-          this.commentCreateForm.target_user_id = null;
-          this.commentCreateForm.target_comment_id = null;
-          console.log(response.data);
-
-          this.comments.unshift(response.data);
-        }).catch(error => {
-          if (typeof error.response.data === 'object') {
-            this.commentCreateForm.errors = _.flatten(_.toArray(error.response.data.errors));
-          } else {
-            this.commentCreateForm.errors = ['something went wrong, please try again.'];
-          }
-        });
-
+      checkContentsHeight() {
+        let postContentsDom = this.$refs.postContents;
+        if (postContentsDom.clientHeight > 150) {
+          postContentsDom.style.maxHeight = '150px';
+          postContentsDom.lastElementChild.style.display = 'flex';
+        }
       },
-      likeComment(comment, index) {
-        axios.post(`/comments/${comment.id}/like`).then(response => {
-          Vue.set(this.comments, index, response.data);
-        });
+
+      showMore() {
+        let postContentsDom = this.$refs.postContents;
+        postContentsDom.style.maxHeight = 'none';
+        postContentsDom.lastElementChild.style.display = 'none';
       }
-
-    },
-    components: {
-      InputTag,
     },
   }
-
-  /* TODO::extract comments to single component*/
 
 </script>

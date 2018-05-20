@@ -18,7 +18,8 @@ class Comment extends Model
 
     protected $appends = [
         'like_count',
-        'has_liked_by_request_user'
+        'has_liked_by_request_user',
+        'has_owned_by_request_user'
     ];
 
     /**
@@ -94,7 +95,7 @@ class Comment extends Model
 
     /**
      * append attribute [has_liked_by_request_user]
-     * detect where the comment is liked by request user
+     * detect the comment is liked by request user
      * @return bool
      */
     public function getHasLikedByRequestUserAttribute()
@@ -105,9 +106,22 @@ class Comment extends Model
         return false;
     }
 
+    /**
+     * append attribute [has_owned_by_request_user]
+     * detect the comment is owned by request user
+     * @return bool
+     */
+    public function getHasOwnedByRequestUserAttribute()
+    {
+        if (Auth::check()) {
+            return $this->hasOwnedByGivenUser(Auth::user());
+        }
+        return false;
+    }
+
 
     /**
-     * detect the comment is owned by given user
+     * detect the comment is liked by given user
      * @param User $user
      * @return bool
      */
@@ -118,6 +132,17 @@ class Comment extends Model
                 ->where('comment_id', $this->id);
         })->exists();
         return $exists;
+    }
+
+
+    /**
+     * detect the comment is owned by given user
+     * @param User $user
+     * @return bool
+     */
+    public function hasOwnedByGivenUser(User $user)
+    {
+        return $this->user_id === $user->id;
     }
 
 

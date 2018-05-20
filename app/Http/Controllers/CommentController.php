@@ -93,14 +93,45 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $this->authorize('delete', $comment);
+        $comment->delete();
+        return response()->json([
+            'message' => 'deleted success',
+        ]);
     }
 
+    /**
+     * Liked the specified comment resource
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function like(Request $request, Comment $comment)
     {
         $request->user()->likedComments()->toggle($comment->id);
 
-        $result = Comment::find($comment->id)->load(['user']);
+        $result = Comment::find($comment->id)->load(['user', 'targetUser', 'targetComment']);
+
+        return response()->json($result);
+    }
+
+    /**
+     * Reply the specified comment resource
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reply(Request $request, Comment $comment)
+    {
+        $replyComment = Comment::create([
+            'contents' => $request->contents,
+            'post_id' => $request->post_id,
+            'user_id' => $request->user()->id,
+            'target_user_id' => $request->target_user_id,
+            'target_comment_id' => $comment->id,
+        ]);
+
+        $result = $replyComment->load(['user', 'targetUser', 'targetComment']);
 
         return response()->json($result);
     }

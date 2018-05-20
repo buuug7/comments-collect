@@ -7,7 +7,7 @@
             <posts-component></posts-component>
         </div>
         <div class="col-md-4">
-            <div class="card text-center rounded-0">
+            <div class="card text-center rounded-0 mb-4">
 
                 <div class="card-body">
                     <h5 class="card-title">Awesome Comments Collection</h5>
@@ -15,6 +15,17 @@
                         Make your favorite comments persist forever.
                     </p>
                     <a href="/post-create" class="btn btn-primary">Contribute</a>
+                </div>
+            </div>
+
+            <div class="card text-center rounded-0">
+
+                <div class="card-body">
+                    <h5 class="card-title">Before contribute</h5>
+                    <p class="card-text">
+                        Need to know some principles of contribution.
+                    </p>
+                    <a href="/post-create" class="btn btn-primary">View detail</a>
                 </div>
             </div>
         </div>

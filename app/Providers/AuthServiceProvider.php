@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Comment;
+use App\Policies\CommentPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\TagPolicy;
 use App\Post;
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Post::class => PostPolicy::class,
         Tag::class => TagPolicy::class,
+        Comment::class => CommentPolicy::class
     ];
 
     /**
