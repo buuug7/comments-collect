@@ -1,6 +1,7 @@
 <template>
 
     <div class="comments">
+        <hr>
         <h3 class="mb-4">Comments ({{ comments.length }})</h3>
         <div class="create-comment mb-4">
             <!-- Form Errors -->
