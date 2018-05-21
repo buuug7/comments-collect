@@ -10,6 +10,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 // add
+window.moment = require('moment');
+
 import VueContentPlaceholders from 'vue-content-placeholders';
 Vue.use(VueContentPlaceholders);
 // end add

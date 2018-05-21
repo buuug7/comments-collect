@@ -54,7 +54,7 @@
                 <div class="comment__header-author">
                     <span>{{ commentClone.user.name }}</span>
                     <span class="text-muted small">
-                    {{ commentClone.created_at }}
+                    {{ createdAt }}
                 </span>
                 </div>
             </div>
@@ -150,6 +150,12 @@
       setTimeout(() => {
         this.commentClone = this.comment;
       }, 1000)
+    },
+
+    computed: {
+      createdAt() {
+        return moment(this.commentClone.created_at).fromNow();
+      }
     },
     methods: {
       clearError() {

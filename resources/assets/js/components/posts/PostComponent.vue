@@ -69,8 +69,8 @@
                         <a href="#"
                            v-if="postClone.has_stared_by_request_user"
                            @click.prevent="star"
-                           class="btn btn-outline-primary mb-2">
-                            Stared ({{ postClone.stared_users_count }})
+                           class="btn btn-primary mb-2">
+                            Star ({{ postClone.stared_users_count }})
                         </a>
                         <a href="#"
                            v-else
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="card-footer text-muted">
-                    Last updated : {{ postClone.updated_at }}
+                    Last updated : {{ updatedAt }}
                 </div>
             </div>
             <!-- Modal -->
@@ -210,12 +210,16 @@
           this.checkContentsHeight();
         })
       }, 1000);
-
-
     },
     components: {
       InputTag,
       CommentsComponent,
+    },
+
+    computed: {
+      updatedAt() {
+        return moment(this.postClone.updated_at).fromNow();
+      }
     },
     methods: {
       star() {
