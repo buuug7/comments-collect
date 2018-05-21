@@ -18,11 +18,12 @@
                             class="form-control"
                             name="newComment"
                             placeholder="add new comment"
+                            @input="clearError"
                             v-model="createForm.contents">
                     </textarea>
                 </div>
                 <a href="javascript:"
-                   class="btn btn-primary"
+                   class="btn btn-outline-primary"
                    @click.prevent="addNewComment"
                 >comment</a>
             </form>
@@ -100,6 +101,10 @@
         });
       },
 
+      clearError(){
+        this.createForm.errors = [];
+      },
+
       addNewComment() {
         this.createForm.post_id = this.post_id;
         axios.post('/comments', this.createForm).then(response => {
@@ -112,6 +117,7 @@
         }).catch(error => {
           if (typeof error.response.data === 'object') {
             this.createForm.errors = _.flatten(_.toArray(error.response.data.errors));
+            this.createForm.errors.push(error.response.data.message);
           } else {
             this.createForm.errors = ['something went wrong, please try again.'];
           }

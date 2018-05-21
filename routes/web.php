@@ -29,6 +29,12 @@ Route::resource('posts', 'PostController');
 
 Route::resource('tags', 'TagController');
 
-Route::post('/comments/{comment}/like','CommentController@like');
-Route::post('/comments/{comment}/reply','CommentController@reply');
-Route::resource('comments','CommentController');
+Route::post('/comments/{comment}/like', 'CommentController@like');
+Route::post('/comments/{comment}/reply', 'CommentController@reply');
+Route::resource('comments', 'CommentController');
+
+
+// help
+Route::get('/help/contribute-guide', function () {
+    return view('help.contribute-guide');
+});

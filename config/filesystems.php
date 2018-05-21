@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'docs' => [
+            'driver' => 'local',
+            'root' => base_path('docs'),
+        ],
+
     ],
 
 ];

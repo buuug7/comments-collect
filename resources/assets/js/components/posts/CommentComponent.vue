@@ -108,6 +108,7 @@
                     <div class="form-group">
                     <textarea class="form-control"
                               placeholder="add reply"
+                              @input="clearError"
                               v-model="replyForm.contents"
                     ></textarea>
                     </div>
@@ -151,7 +152,18 @@
       }, 1000)
     },
     methods: {
+      clearError() {
+        this.errors = [];
+      },
+      resetReplyForm() {
+        this.replyForm.contents = '';
+        this.replyForm.post_id = null;
+        this.replyForm.target_user_id = null;
+        this.replyForm.target_comment_id = null;
+      },
       toggleReplyForm() {
+        this.clearError();
+
         let replyForm = document.querySelector(`#comment-reply-${this.commentClone.id}`);
 
         if (replyForm.style.display === 'none') {
@@ -162,8 +174,8 @@
       },
       likeComment() {
         axios.post(`/comments/${this.comment.id}/like`).then(response => {
-          //Vue.set(this.comments, index, response.data);
           this.commentClone = response.data;
+          this.clearError();
         }).catch(error => {
           if (typeof error.response.data === 'object') {
             this.errors = _.flatten(_.toArray(error.response.data.errors));
@@ -179,13 +191,9 @@
         this.replyForm.target_comment_id = this.commentClone.id;
         axios.post(`/comments/${this.commentClone.id}/reply`, this.replyForm).then(response => {
           this.$emit('replied', response.data);
-          this.replyForm.contents = '';
-          this.replyForm.post_id = null;
-          this.replyForm.target_user_id = null;
-          this.replyForm.target_comment_id = null;
+          this.resetReplyForm();
           this.toggleReplyForm();
         }).catch(error => {
-          console.log(error.response);
           if (typeof error.response.data === 'object') {
             this.errors = _.flatten(_.toArray(error.response.data.errors));
             this.errors.push(error.response.data.message);

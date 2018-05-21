@@ -36,14 +36,6 @@
                     Added by <a href="#">{{ postClone.user.name }}</a>
                 </div>
                 <div class="card-body">
-                    <!-- display errors -->
-                    <div v-if="errors.length>0" class="alert alert-warning m-4">
-                        <ul class="mb-0">
-                            <li v-for="error in errors">
-                                {{ error }}
-                            </li>
-                        </ul>
-                    </div>
 
                     <div class="post__content mb-4" ref="postContents">
                         <div>{{ postClone.contents }}</div>
@@ -99,7 +91,14 @@
                            v-if="postClone.has_owned_by_request_user"
                            @click.prevent="deletePost"
                            class="btn btn-outline-danger mb-2">Delete</a>
-
+                    </div>
+                    <!-- display errors -->
+                    <div v-if="errors.length>0" class="alert alert-danger m-4">
+                        <ul class="mb-0">
+                            <li v-for="error in errors">
+                                {{ error }}
+                            </li>
+                        </ul>
                     </div>
                     <CommentsComponent
                             v-if="showComments"

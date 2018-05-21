@@ -25,7 +25,7 @@
                     <p class="card-text">
                         Need to know some principles of contribution.
                     </p>
-                    <a href="/post-create" class="btn btn-primary">View detail</a>
+                    <a href="/help/contribute-guide" class="btn btn-primary">View detail</a>
                 </div>
             </div>
         </div>

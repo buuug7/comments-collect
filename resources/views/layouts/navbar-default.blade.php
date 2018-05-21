@@ -11,9 +11,6 @@
 			<!-- Left Side Of Navbar -->
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="/posts">Posts</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" href="/tags">Tags</a>
 				</li>
 				<li class="nav-item">
