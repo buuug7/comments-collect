@@ -107,7 +107,10 @@ class User extends Authenticatable
      */
     public function getAvatar()
     {
-        return Storage::url($this->profile->avatar_url);
+        if ($this->profile->avatar_url) {
+            return Storage::url($this->profile->avatar_url);
+        }
+        return '/images/default-avatar.png';
     }
 
 }
