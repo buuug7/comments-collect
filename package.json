@@ -20,6 +20,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "font-awesome": "^4.7.0",
+        "moment": "^2.22.1",
         "vue-content-placeholders": "^0.2.1",
         "vue-input-tag": "^1.0.3"
     }

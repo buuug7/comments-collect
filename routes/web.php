@@ -36,5 +36,6 @@ Route::resource('comments', 'CommentController');
 
 // help
 Route::get('/help/contribute-guide', function () {
+
     return view('help.contribute-guide');
 });

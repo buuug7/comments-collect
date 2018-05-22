@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Events\CommentReplied;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -128,7 +129,7 @@ class CommentController extends Controller
      */
     public function reply(Request $request, Comment $comment)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'contents' => 'required',
         ]);
         $replyComment = Comment::create([
@@ -140,6 +141,8 @@ class CommentController extends Controller
         ]);
 
         $result = $replyComment->load(['user', 'targetUser', 'targetComment']);
+
+        event(new CommentReplied($result));
 
         return response()->json($result);
     }
