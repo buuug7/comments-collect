@@ -33,10 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
-        return view('posts.create', [
-            'tags' => $tags,
-        ]);
+
     }
 
     /**
@@ -75,9 +72,10 @@ class PostController extends Controller
             $post->tags()->detach();
         }
 
-        $result = $post->load(['user', 'tags']);
-
-        return response()->json($result);
+        return response()->json([
+            'post' => $post->load(['user', 'tags']),
+            'message' => 'Created success!',
+        ]);
     }
 
     /**
@@ -101,11 +99,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $tags = Tag::all();
-        return view('posts.edit', [
-            'post' => $post,
-            'tags' => $tags,
-        ]);
+        //
     }
 
     /**
@@ -165,8 +159,6 @@ class PostController extends Controller
             'message' => 'deleted success',
         ]);
     }
-
-    // more // more // more //
 
 
     /**

@@ -14,7 +14,7 @@
                     <p class="card-text">
                         Make your favorite comments persist forever.
                     </p>
-                    <a href="/post-create" class="btn btn-primary">Contribute</a>
+                    <a href="/contribute" class="btn btn-primary">Contribute</a>
                 </div>
             </div>
 
@@ -35,10 +35,10 @@
                     <h5 class="card-title">Acknowledgement</h5>
                     <p class="card-text">
                     <ul class="list-unstyled">
-                        <li><a href="https://github.com/laravel/laravel">Laravel</a></li>
-                        <li><a href="https://github.com/twbs/bootstrap">Bootstrap</a></li>
-                        <li><a href="https://github.com/vuejs/vue">Vue</a></li>
-                        <li><a href="https://github.com/jquery/jquery">jQuery</a></li>
+                        <li class="mb-2"><a href="https://github.com/laravel/laravel">Laravel</a></li>
+                        <li class="mb-2"><a href="https://github.com/twbs/bootstrap">Bootstrap</a></li>
+                        <li class="mb-2"><a href="https://github.com/vuejs/vue">Vue</a></li>
+                        <li class="mb-2"><a href="https://github.com/jquery/jquery">jQuery</a></li>
                     </ul>
                     </p>
                 </div>

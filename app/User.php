@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -26,6 +28,30 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $appends = [
+        'avatar_url'
+    ];
+
+    /**
+     * user profile
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+
+    /**
+     * append attribute [avatar_url]
+     * return the user avatar url
+     * @return mixed
+     */
+    public function getAvatarUrlAttribute()
+    {
+        return $this->getAvatar();
+    }
 
     /**
      * user created posts
@@ -72,6 +98,16 @@ class User extends Authenticatable
     public function staredPosts()
     {
         return $this->belongsToMany(Post::class, 'post_user_stars');
+    }
+
+
+    /**
+     * return the user avatar url
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return Storage::url($this->profile->avatar_url);
     }
 
 }

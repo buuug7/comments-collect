@@ -14,7 +14,7 @@
 					<a class="nav-link" href="/post-create">Ranking list</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/post-create">Contribute</a>
+					<a class="nav-link" href="/contribute">Contribute</a>
 				</li>
 			</ul>
 
@@ -31,6 +31,8 @@
 						</a>
 
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+							<a class="dropdown-item" href="/settings/profile">Profile</a>
 
 							<a class="dropdown-item" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();

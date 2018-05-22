@@ -50,7 +50,7 @@
     <div v-if="!deleted">
         <div v-if="commentClone" class="comment mb-4">
             <div class="comment__header mb-2">
-                <img src="/images/avatar.jpg" class="comment__header-avatar mr-3" alt="">
+                <img :src="commentClone.user.avatar_url" class="comment__header-avatar mr-3" alt="">
                 <div class="comment__header-author">
                     <span>{{ commentClone.user.name }}</span>
                     <span class="text-muted small">
@@ -149,6 +149,7 @@
     mounted() {
       setTimeout(() => {
         this.commentClone = this.comment;
+        console.log(this.commentClone);
       }, 1000)
     },
 

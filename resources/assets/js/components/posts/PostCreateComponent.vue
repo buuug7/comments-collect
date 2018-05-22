@@ -1,17 +1,21 @@
 <template>
-    <div class="post-create bg-white p-3">
-        <h2>Create Post</h2>
-        <!-- Form Errors -->
-        <div class="alert alert-danger" v-if="createForm.errors.length > 0">
+    <div class="post-create">
+        <!-- Errors -->
+        <div class="alert alert-danger" v-if="errors.length > 0">
             <ul class="mb-0">
-                <li v-for="error in createForm.errors">
+                <li v-for="error in errors">
                     {{ error }}
                 </li>
             </ul>
         </div>
+        <!-- Message -->
+        <div class="alert alert-success" v-if="message">
+            <p class="mb-0">{{ message }}</p>
+        </div>
+
         <form method="post">
             <div class="form-group">
-                <label for="reference">reference</label>
+                <label for="reference">Reference</label>
                 <input type="text"
                        name="reference"
                        id="reference"
@@ -19,7 +23,7 @@
                        v-model="createForm.reference">
             </div>
             <div class="form-group">
-                <label for="contents">contents</label>
+                <label for="contents">Contents</label>
                 <textarea
                         name="contents"
                         id="contents"
@@ -52,29 +56,34 @@
   export default {
     data() {
       return {
+        errors: [],
+        message: '',
         createForm: {
           reference: '',
           contents: '',
           tagsArray: [],
-          errors: [],
         }
       };
     },
     methods: {
       create() {
         axios.post('/posts', this.createForm).then(response => {
-          console.log(response);
-          this.createForm.reference = '';
-          this.createForm.contents = '';
-          this.createForm.tagsArray = [];
-          this.createForm.errors = [];
+          console.log(response.data);
+          this.message = response.data.message;
+          this.clear();
         }).catch(error => {
           if (typeof error.response.data === 'object') {
-            this.createForm.errors = _.flatten(_.toArray(error.response.data.errors));
+            this.errors = _.flatten(_.toArray(error.response.data.errors));
           } else {
-            this.createForm.errors = ['something went wrong, please try again.'];
+            this.errors = ['something went wrong, please try again.'];
           }
         });
+      },
+      clear() {
+        this.createForm.reference = '';
+        this.createForm.contents = '';
+        this.createForm.tagsArray = [];
+        this.errors = [];
       }
     },
     components: {

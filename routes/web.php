@@ -11,17 +11,20 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return redirect('home');
 });
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/post-create', function () {
-    return view('post-create');
-})->name('post-create')->middleware('auth');
+
+// Post
+
+Route::get('/contribute', function () {
+    return view('contribute');
+})->middleware('auth');
 
 Route::post('/posts/{post}/star', 'PostController@star');
 Route::get('/posts/{post}/comments', 'PostController@comments');
@@ -34,7 +37,20 @@ Route::post('/comments/{comment}/reply', 'CommentController@reply');
 Route::resource('comments', 'CommentController');
 
 
-// help
+// User
+
+Route::post('/users/avatar', 'UserController@avatar');
+Route::get('/users/profile', 'UserController@profile');
+Route::put('/users/profile', 'UserController@updateProfile');
+
+// Settings
+Route::get('/settings/profile', function () {
+    return view('settings.profile');
+})->middleware('auth');
+
+
+// Help
+
 Route::get('/help/contribute-guide', function () {
 
     return view('help.contribute-guide');

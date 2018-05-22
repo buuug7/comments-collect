@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Comment;
 use App\Observers\CommentObserver;
 use App\Observers\PostObserver;
+use App\Observers\UserObserver;
 use App\Post;
+use App\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        User::observe(UserObserver::class);
         Post::observe(PostObserver::class);
         Comment::observe(CommentObserver::class);
 

@@ -22,13 +22,16 @@ Vue.use(VueContentPlaceholders);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// posts comments
 Vue.component('post-component',require('./components/posts/PostComponent.vue'));
 Vue.component('posts-component',require('./components/posts/PostsComponent.vue'));
-
 Vue.component('post-create-component',require('./components/posts/PostCreateComponent.vue'));
-
 Vue.component('comment-component',require('./components/posts/CommentComponent.vue'));
 Vue.component('comments-component',require('./components/posts/CommentsComponent.vue'));
+
+// users
+Vue.component('avatar-upload-cropper-component',require('./components/users/AvatarUploadCropperComponent.vue'));
+Vue.component('user-profile-component',require('./components/users/UserProfileComponent.vue'));
 
 
 const app = new Vue({

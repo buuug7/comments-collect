@@ -23,9 +23,9 @@
                     </textarea>
                 </div>
                 <a href="javascript:"
-                   class="btn btn-outline-primary"
+                   class="btn btn-primary"
                    @click.prevent="addNewComment"
-                >comment</a>
+                >Add comment</a>
             </form>
         </div>
         <CommentComponent
