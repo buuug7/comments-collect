@@ -32,7 +32,17 @@
 
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
+							<a class="dropdown-item" href="/users/my/posts">My Posts</a>
+
+							<a class="dropdown-item" href="/users/my/posts/star">Star Posts</a>
+
+							<a class="dropdown-item" href="/users/my/comments">My Comments</a>
+
+							<a class="dropdown-item" href="/users/my/comments/liked">Liked Comments</a>
+
 							<a class="dropdown-item" href="/settings/profile">Profile</a>
+
+							<div class="dropdown-divider"></div>
 
 							<a class="dropdown-item" href="{{ route('logout') }}"
 							   onclick="event.preventDefault();

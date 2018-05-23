@@ -92,10 +92,10 @@ class User extends Authenticatable
 
 
     /**
-     * user stared posts
+     * user star posts
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function staredPosts()
+    public function starPosts()
     {
         return $this->belongsToMany(Post::class, 'post_user_stars');
     }

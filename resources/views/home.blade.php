@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mb-4">
-            <posts-component></posts-component>
+            <posts-component request-url="/posts"></posts-component>
         </div>
         <div class="col-md-4">
             <div class="card text-center rounded-0 mb-4">

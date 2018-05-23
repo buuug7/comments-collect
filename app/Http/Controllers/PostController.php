@@ -169,7 +169,7 @@ class PostController extends Controller
      */
     public function star(Request $request, Post $post)
     {
-        $result = $request->user()->staredPosts()->toggle($post->id);
+        $result = $request->user()->starPosts()->toggle($post->id);
 
         return Post::find($post->id)->load(['user', 'tags']);
     }

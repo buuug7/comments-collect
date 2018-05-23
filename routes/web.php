@@ -20,28 +20,37 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-// Post
-
-Route::get('/contribute', function () {
-    return view('contribute');
-})->middleware('auth');
+// Posts
+Route::view('/contribute', 'contribute')->middleware('auth');
 
 Route::post('/posts/{post}/star', 'PostController@star');
 Route::get('/posts/{post}/comments', 'PostController@comments');
 Route::resource('posts', 'PostController');
 
-Route::resource('tags', 'TagController');
-
+// Comments
 Route::post('/comments/{comment}/like', 'CommentController@like');
 Route::post('/comments/{comment}/reply', 'CommentController@reply');
 Route::resource('comments', 'CommentController');
 
 
-// User
+// Tags
+Route::resource('tags', 'TagController');
 
+
+// User
 Route::post('/users/avatar', 'UserController@avatar');
 Route::get('/users/profile', 'UserController@profile');
 Route::put('/users/profile', 'UserController@updateProfile');
+Route::get('/users/posts','UserController@posts');
+Route::get('/users/posts/star','UserController@starPosts');
+Route::get('/users/comments','UserController@comments');
+Route::get('/users/comments/liked','UserController@likedComments');
+
+Route::view('/users/my/posts','users.my-posts')->middleware('auth');
+Route::view('/users/my/posts/star','users.my-posts-star')->middleware('auth');
+Route::view('/users/my/comments','users.my-comments')->middleware('auth');
+Route::view('/users/my/comments/liked','users.my-comments-liked')->middleware('auth');
+
 
 // Settings
 Route::get('/settings/profile', function () {
@@ -50,7 +59,6 @@ Route::get('/settings/profile', function () {
 
 
 // Help
-
 Route::get('/help/contribute-guide', function () {
 
     return view('help.contribute-guide');

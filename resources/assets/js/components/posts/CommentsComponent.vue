@@ -1,9 +1,10 @@
 <template>
 
     <div class="comments">
-        <hr>
+        <hr v-if="postId">
         <h3 class="mb-4">Comments ({{ comments.length }})</h3>
-        <div class="create-comment mb-4">
+        <!-- show created comment form if exists postId -->
+        <div class="create-comment mb-4" v-if="postId">
             <!-- Form Errors -->
             <div class="alert alert-danger" v-if="createForm.errors.length > 0">
                 <ul class="mb-0">
@@ -32,8 +33,8 @@
                 @replied="applied"
                 v-for="comment in comments"
                 :comment="comment"
-                :key="comment.id"
-        ></CommentComponent>
+                :key="comment.id">
+        </CommentComponent>
         <div class="more-comments text-center">
             <a href="javascript:"
                @click.prevent="loadMoreComments"
@@ -50,7 +51,7 @@
   import CommentComponent from './CommentComponent.vue';
 
   export default {
-    props: ['post_id'],
+    props: ['postId', 'requestUrl'],
     data() {
       return {
         comments: [],
@@ -73,7 +74,7 @@
     },
     methods: {
       loadComments() {
-        axios.get(`/posts/${this.post_id}/comments`).then(response => {
+        axios.get(this.requestUrl).then(response => {
           this.comments = response.data.data;
           this.nextCommentsUrl = response.data.next_page_url;
           console.log(response.data.data);
@@ -101,12 +102,12 @@
         });
       },
 
-      clearError(){
+      clearError() {
         this.createForm.errors = [];
       },
 
       addNewComment() {
-        this.createForm.post_id = this.post_id;
+        this.createForm.post_id = this.postId;
         axios.post('/comments', this.createForm).then(response => {
           this.createForm.contents = '';
           this.createForm.post_id = null;
@@ -123,8 +124,8 @@
           }
         });
       },
-      applied(comment){
-        console.log('applied accured');
+      applied(comment) {
+        console.log('applied!');
         this.comments.unshift(comment);
       }
 

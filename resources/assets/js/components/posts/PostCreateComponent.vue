@@ -89,5 +89,6 @@
     components: {
       InputTag
     }
+
   }
 </script>

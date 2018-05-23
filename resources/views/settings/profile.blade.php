@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="container">
-		<div class="bg-white p-4">
+		<div class=" p-4">
 			<div class="headline">
 				<h3 class="title">User profiles</h3>
 			</div>

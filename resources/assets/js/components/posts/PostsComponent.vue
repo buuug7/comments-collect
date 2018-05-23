@@ -9,7 +9,9 @@
             <a href="#"
                @click.prevent="more"
                ref="moreButton"
-               class="btn btn-outline-primary">Load More</a>
+               class="btn btn-outline-primary">
+                Load More
+            </a>
         </div>
     </div>
 </template>
@@ -18,21 +20,22 @@
   import PostComponent from './PostComponent.vue';
 
   export default {
+    props:['requestUrl'],
     data() {
       return {
         posts: [],
         nextPageUrl: null,
       };
     },
+
     mounted() {
-      axios.get('/posts').then(response => {
+      axios.get(this.requestUrl).then(response => {
         this.posts = response.data.data;
         this.nextPageUrl = response.data.next_page_url;
       });
     },
     methods: {
       more(e) {
-
         let moreButton = this.$refs.moreButton;
         moreButton.textContent = 'loading...';
 

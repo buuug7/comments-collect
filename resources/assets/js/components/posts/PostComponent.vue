@@ -67,16 +67,16 @@
 
                     <div class="post__actions mb-4">
                         <a href="#"
-                           v-if="postClone.has_stared_by_request_user"
+                           v-if="postClone.has_star_by_request_user"
                            @click.prevent="star"
                            class="btn btn-primary mb-2">
-                            Star ({{ postClone.stared_users_count }})
+                            Star ({{ postClone.star_users_count }})
                         </a>
                         <a href="#"
                            v-else
                            @click.prevent="star"
                            class="btn btn-outline-primary mb-2">
-                            Star ({{ postClone.stared_users_count }})
+                            Star ({{ postClone.star_users_count }})
                         </a>
                         <a href="#"
                            @click.prevent="toggleComments"
@@ -102,7 +102,8 @@
                     </div>
                     <CommentsComponent
                             v-if="showComments"
-                            :post_id="postClone.id">
+                            :post-id="postClone.id"
+                            :request-url="'/posts/'+postClone.id+'/comments'">
                     </CommentsComponent>
                 </div>
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 
 
 class UserController extends Controller
@@ -90,4 +89,59 @@ class UserController extends Controller
             'avatar_url' => asset('storage/' . $avatarUrl),
         ]);
     }
+
+
+    /**
+     * Return the posts that the requested user created
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function posts(Request $request)
+    {
+        $result = $request->user()->posts()
+            ->with(['user', 'tags'])->latest()->paginate(5);
+        return response()->json($result);
+    }
+
+
+    /**
+     * Return the posts that star by request user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function starPosts(Request $request)
+    {
+        $result = $request->user()->starPosts()
+            ->with('user', 'tags')->latest()->paginate(5);
+        return response()->json($result);
+    }
+
+
+    /**
+     * Return comments that the request user created
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function comments(Request $request)
+    {
+        $result = $request->user()->comments()
+            ->with(['user', 'targetUser', 'targetComment'])
+            ->latest()->paginate(5);
+        return response()->json($result);
+    }
+
+
+    /**
+     * Return comments that the request user liked
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function likedComments(Request $request)
+    {
+        $result = $request->user()->likedComments()
+            ->with(['user', 'targetUser', 'targetComment'])
+            ->latest()->paginate(5);
+        return response()->json($result);
+    }
+
 }

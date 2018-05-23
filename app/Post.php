@@ -17,9 +17,9 @@ class Post extends Model
 
     protected $appends = [
         'comments_count',
-        'has_stared_by_request_user',
+        'has_star_by_request_user',
         'has_owned_by_request_user',
-        'stared_users_count',
+        'star_users_count',
     ];
 
     /**
@@ -42,10 +42,10 @@ class Post extends Model
 
 
     /**
-     * the post stared by users
+     * the star users of the post
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function staredUsers()
+    public function starUsers()
     {
         return $this->belongsToMany(User::class, 'post_user_stars');
     }
@@ -66,14 +66,14 @@ class Post extends Model
     }
 
     /**
-     * append attribute [has_stared_by_request_user]
-     * detect whether the post is stared by request user
+     * append attribute [has_star_by_request_user]
+     * detect whether the post is star by request user
      * @return bool|mixed
      */
-    public function getHasStaredByRequestUserAttribute()
+    public function getHasStarByRequestUserAttribute()
     {
         if (Auth::check()) {
-            return $this->hasStaredByGivenUser(Auth::user());
+            return $this->hasStarByGivenUser(Auth::user());
         }
         return false;
     }
@@ -92,23 +92,23 @@ class Post extends Model
     }
 
     /**
-     * append attribute [stared_users_count]
-     * get the stared users count
+     * append attribute [star_users_count]
+     * get the star users count
      * @return int
      */
-    public function getStaredUsersCountAttribute()
+    public function getStarUsersCountAttribute()
     {
-        return $this->staredUsers()->count();
+        return $this->starUsers()->count();
     }
 
     /**
-     * detect the post is stared by a given user
+     * detect the post is star by a given user
      * @param User $user
      * @return mixed|boolean
      */
-    public function hasStaredByGivenUser(User $user)
+    public function hasStarByGivenUser(User $user)
     {
-        $exists = self::whereHas('staredUsers', function ($query) use ($user) {
+        $exists = self::whereHas('starUsers', function ($query) use ($user) {
             $query->where('user_id', $user->id)
                 ->where('post_id', $this->id);
         })->exists();
