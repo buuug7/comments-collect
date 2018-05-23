@@ -112,12 +112,12 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+            <div class="modal fade" :id="'editModal-'+postClone.id" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Post</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="modal">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -132,7 +132,7 @@
                             </div>
                             <form method="post">
                                 <div class="form-group">
-                                    <label for="reference">reference</label>
+                                    <label for="reference">Reference</label>
                                     <input type="text"
                                            name="reference"
                                            id="reference"
@@ -140,7 +140,7 @@
                                            v-model="editForm.reference">
                                 </div>
                                 <div class="form-group">
-                                    <label for="contents">contents</label>
+                                    <label for="contents">Contents</label>
                                     <textarea
                                             name="contents"
                                             id="contents"
@@ -166,7 +166,7 @@
                             </button>
                             <button type="button"
                                     class="btn btn-primary"
-                                    @click="update">Save Changes
+                                    @click="updatePost">Save Changes
                             </button>
                         </div>
                     </div>
@@ -242,24 +242,29 @@
           this.errors = [error.response.data.message];
         });
       },
+      resetEditForm() {
+        this.editForm.errors = [];
+        this.editForm.reference = '';
+        this.editForm.contents = '';
+        this.editForm.tags = [];
+        this.editForm.tagsArray = [];
+      },
       editPost() {
+        this.resetEditForm();
         this.editForm.id = this.postClone.id;
         this.editForm.reference = this.postClone.reference;
         this.editForm.contents = this.postClone.contents;
-
         this.postClone.tags.forEach(v => {
           this.editForm.tagsArray.push(v.name);
         });
-        $('#editModal').modal('show');
+
+        $("#editModal-"+this.postClone.id).modal('show');
       },
-      update() {
+      updatePost() {
         axios.put(`/posts/${this.editForm.id}`, this.editForm).then(response => {
-          console.log(response);
           this.postClone = response.data;
-          this.editForm.reference = '';
-          this.editForm.contents = '';
-          this.editForm.tagsArray = [];
-          $('#editModal').modal('hide');
+          this.resetEditForm();
+          $("#editModal-"+this.postClone.id).modal('hide');
         }).catch(error => {
           if (typeof error.response.data === 'object') {
             this.editForm.errors = _.flatten(_.toArray(error.response.data.errors));
