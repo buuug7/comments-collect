@@ -63,3 +63,8 @@ Route::get('/help/contribute-guide', function () {
 
     return view('help.contribute-guide');
 });
+
+// UI
+Route::view('/ui/common','ui.common');
+Route::view('/ui/headline','ui.headline');
+

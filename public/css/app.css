@@ -13467,13 +13467,13 @@ a.text-dark:focus {
 }
 
 .box-shadow-1 {
-  -webkit-box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
-          box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .box-shadow-2 {
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
+          box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
 }
 
 .box-shadow-3 {

@@ -2,13 +2,15 @@
 
 namespace App\Listeners;
 
+use App\Notifications\UserLogin;
+use App\Notifications\UserLoginNotify;
 use Illuminate\Support\Facades\Log;
 
 class UserEventSubscriber
 {
     public function onUserLogin($event)
     {
-        Log::info("User Login: {$event->user->name}");
+        $event->user->notify(new UserLoginNotify($event->user));
     }
 
     public function onUserLogout($event)
