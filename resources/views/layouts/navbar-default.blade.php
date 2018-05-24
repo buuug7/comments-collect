@@ -25,6 +25,12 @@
 					<li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
 					<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
 				@else
+					<li class="nav-item">
+						<a class="nav-link position-relative" href="{{ url('/users/my/notifications') }}">
+							<i class="fa fa-bell-o"></i>
+							<span class="icon-unread"></span>
+						</a>
+					</li>
 					<li class="nav-item dropdown">
 						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 							{{ Auth::user()->name }} <span class="caret"></span>

@@ -32,6 +32,7 @@ Vue.component('comments-component',require('./components/posts/CommentsComponent
 // users
 Vue.component('avatar-upload-cropper-component',require('./components/users/AvatarUploadCropperComponent.vue'));
 Vue.component('user-profile-component',require('./components/users/UserProfileComponent.vue'));
+Vue.component('user-notifications-component',require('./components/users/NotificationsComponent.vue'));
 
 
 const app = new Vue({

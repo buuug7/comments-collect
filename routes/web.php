@@ -45,11 +45,14 @@ Route::get('/users/posts','UserController@posts');
 Route::get('/users/posts/star','UserController@starPosts');
 Route::get('/users/comments','UserController@comments');
 Route::get('/users/comments/liked','UserController@likedComments');
+Route::get('/users/notifications','UserController@notifications');
+
 
 Route::view('/users/my/posts','users.my-posts')->middleware('auth');
 Route::view('/users/my/posts/star','users.my-posts-star')->middleware('auth');
 Route::view('/users/my/comments','users.my-comments')->middleware('auth');
 Route::view('/users/my/comments/liked','users.my-comments-liked')->middleware('auth');
+Route::view('/users/my/notifications','users.my-notifications');
 
 
 // Settings

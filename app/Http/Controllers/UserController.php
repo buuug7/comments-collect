@@ -144,4 +144,10 @@ class UserController extends Controller
         return response()->json($result);
     }
 
+    public function notifications(Request $request)
+    {
+        $result = $request->user()->notifications->groupBy('type')->toArray();
+        return response()->json($result);
+    }
+
 }
