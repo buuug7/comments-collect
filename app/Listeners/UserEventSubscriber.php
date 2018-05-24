@@ -10,7 +10,7 @@ class UserEventSubscriber
 {
     public function onUserLogin($event)
     {
-        $event->user->notify(new UserLoginNotify($event->user));
+        $event->user->notify((new UserLoginNotify($event->user)));
     }
 
     public function onUserLogout($event)

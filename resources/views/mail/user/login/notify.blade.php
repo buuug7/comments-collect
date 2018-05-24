@@ -1,7 +1,7 @@
 @component('mail::message')
 # Hello, {{ $user->name }}
 
-You just login Comments Application, the time is at {{ now() }}.
+You just login {{ config('app.name') }} Application, the time is at {{ now() }}.
 
 If this is not your operation, be careful that your password may be leaked.
 

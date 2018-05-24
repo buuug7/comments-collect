@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Events\CommentReplied;
+use App\Notifications\CommentRepliedNotify;
+use App\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -132,6 +134,7 @@ class CommentController extends Controller
         $this->validate($request, [
             'contents' => 'required',
         ]);
+
         $replyComment = Comment::create([
             'contents' => $request->contents,
             'post_id' => $request->post_id,
@@ -142,7 +145,7 @@ class CommentController extends Controller
 
         $result = $replyComment->load(['user', 'targetUser', 'targetComment']);
 
-        event(new CommentReplied($result));
+        event(new CommentReplied($comment));
 
         return response()->json($result);
     }

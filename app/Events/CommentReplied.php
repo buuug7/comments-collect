@@ -11,8 +11,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CommentReplied
-{
+class CommentReplied {
+
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $comment;
@@ -36,4 +36,6 @@ class CommentReplied
     {
         return new PrivateChannel('channel-name');
     }
+
+
 }

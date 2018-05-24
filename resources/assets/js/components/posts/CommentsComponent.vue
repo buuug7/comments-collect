@@ -77,7 +77,6 @@
         axios.get(this.requestUrl).then(response => {
           this.comments = response.data.data;
           this.nextCommentsUrl = response.data.next_page_url;
-          console.log(response.data.data);
         });
       },
       loadMoreComments() {
@@ -125,7 +124,6 @@
         });
       },
       applied(comment) {
-        console.log('applied!');
         this.comments.unshift(comment);
       }
 

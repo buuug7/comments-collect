@@ -14,6 +14,9 @@
 
 	<title>{{ config('app.name', 'comments collect') }}</title>
 
+	<!-- Font-awesome -->
+	<link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	@stack('styles')

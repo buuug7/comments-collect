@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\CommentReplied' => [
-            'App\Listeners\LogCommentRepliedNotification'
+            'App\Listeners\CommentRepliedListener'
         ],
     ];
 

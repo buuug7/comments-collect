@@ -149,7 +149,6 @@
     mounted() {
       setTimeout(() => {
         this.commentClone = this.comment;
-        console.log(this.commentClone);
       }, 1000)
     },
 
@@ -215,7 +214,6 @@
           return;
         }
         axios.delete(`/comments/${this.comment.id}`).then(response => {
-          console.log(response.data);
           this.commentClone = null;
           this.deleted = true;
         });

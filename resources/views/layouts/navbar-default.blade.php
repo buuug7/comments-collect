@@ -3,7 +3,7 @@
 		<a class="navbar-brand" href="{{ url('/') }}">
 			{{ config('app.name', 'Laravel') }}
 		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -14,7 +14,7 @@
 					<a class="nav-link" href="/post-create">Ranking list</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/contribute">Contribute</a>
+					<a class="nav-link" href="{{ url('/contribute') }}">Contribute</a>
 				</li>
 			</ul>
 
@@ -26,27 +26,28 @@
 					<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
 				@else
 					<li class="nav-item dropdown">
-						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 							{{ Auth::user()->name }} <span class="caret"></span>
 						</a>
 
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-							<a class="dropdown-item" href="/users/my/posts">My Posts</a>
+							<a class="dropdown-item" href="{{ url('/users/my/posts') }}">My Posts</a>
 
-							<a class="dropdown-item" href="/users/my/posts/star">Star Posts</a>
+							<a class="dropdown-item" href="{{ url('/users/my/posts/star') }}">Star Posts</a>
 
-							<a class="dropdown-item" href="/users/my/comments">My Comments</a>
+							<a class="dropdown-item" href="{{ url('/users/my/comments') }}">My Comments</a>
 
-							<a class="dropdown-item" href="/users/my/comments/liked">Liked Comments</a>
+							<a class="dropdown-item" href="{{ url('/users/my/comments/liked') }}">Liked Comments</a>
 
-							<a class="dropdown-item" href="/settings/profile">Profile</a>
+							<a class="dropdown-item" href="{{ url('/settings/profile') }}">Profile</a>
 
 							<div class="dropdown-divider"></div>
 
-							<a class="dropdown-item" href="{{ route('logout') }}"
+							<a class="dropdown-item"
+							   href="{{ route('logout') }}"
 							   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+							   document.getElementById('logout-form').submit();">
 								{{ __('Logout') }}
 							</a>
 

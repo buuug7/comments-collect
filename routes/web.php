@@ -60,11 +60,16 @@ Route::get('/settings/profile', function () {
 
 // Help
 Route::get('/help/contribute-guide', function () {
-
     return view('help.contribute-guide');
 });
 
 // UI
 Route::view('/ui/common','ui.common');
 Route::view('/ui/headline','ui.headline');
+
+
+// Test
+Route::get('/test',function (){
+    \App\Jobs\TestJob::dispatch()->delay(now()->addSecond(5));
+});
 
