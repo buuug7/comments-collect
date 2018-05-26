@@ -11,20 +11,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CommentReplied {
+class CommentReplied
+{
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $comment;
+    public $repliedComment;
 
     /**
      * Create a new event instance.
      * @param Comment $comment
+     * @param Comment $repliedComment
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment, Comment $repliedComment)
     {
         $this->comment = $comment;
+        $this->repliedComment = $repliedComment;
     }
 
     /**

@@ -1,31 +1,30 @@
 <template>
     <div class="notifications">
 
-        <div class="list-group mb-5" v-for="(v,k) in notifications">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ k }}</h5>
-                </div>
-
-                <div class="mb-4" v-for="item in v">
-                    <p class="mb-0">{{ item.data }}</p>
-                    <small>{{ item.created_at }}</small>
-                </div>
-            </a>
+        <div class="card mb-5" v-for="(v,k) in notifications">
+            <div class="card-header text-center">
+                {{ k }}
+            </div>
+            <div class="card-body">
+                <NotificationComponent v-for="notification in v"
+                                       :notification="notification"
+                                       :key="notification.id">
+                </NotificationComponent>
+            </div>
         </div>
     </div>
 </template>
 
 
 <script>
+  import NotificationComponent from './NotificationComponent';
 
   export default {
     props: ['requestUrl'],
     components: {
-
+      NotificationComponent,
     },
     data() {
-
       return {
         notifications: [],
       };
@@ -36,8 +35,6 @@
         console.log(response.data);
       });
     },
-    methods: {
 
-    }
   }
 </script>

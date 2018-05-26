@@ -32,6 +32,8 @@ Route::post('/comments/{comment}/like', 'CommentController@like');
 Route::post('/comments/{comment}/reply', 'CommentController@reply');
 Route::resource('comments', 'CommentController');
 
+// Notifications
+Route::post('/notifications/{id}/read','NotificationController@markAsRead');
 
 // Tags
 Route::resource('tags', 'TagController');

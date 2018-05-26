@@ -147,7 +147,7 @@ class CommentController extends Controller
 
         $result = $replyComment->load(['user', 'targetUser', 'targetComment']);
 
-        event(new CommentReplied($comment));
+        event(new CommentReplied($comment,$replyComment));
 
         return response()->json($result);
     }

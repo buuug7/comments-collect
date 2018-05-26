@@ -14,15 +14,17 @@ class CommentRepliedNotify extends Notification
     use Queueable;
 
     public $comment;
+    public $repliedComment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment, Comment $repliedComment)
     {
         $this->comment = $comment;
+        $this->repliedComment = $repliedComment;
     }
 
     /**
@@ -57,6 +59,7 @@ class CommentRepliedNotify extends Notification
     {
         return [
             'comment_id' => $this->comment->id,
+            'replied_comment_id' => $this->repliedComment->id,
         ];
     }
 }
