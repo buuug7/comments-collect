@@ -67,7 +67,9 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        $result = Comment::with(['user', 'targetUser', 'targetComment','repliedComments'])
+            ->where('id', $comment->id)->first();
+        return response()->json($result);
     }
 
     /**
