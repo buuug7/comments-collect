@@ -152,7 +152,7 @@ class UserController extends Controller
      */
     public function notifications(Request $request)
     {
-        $result = $request->user()->unreadNotifications()->simplePaginate(15);
+        $result = $request->user()->unreadNotifications()->paginate(15);
         return response()->json($result);
     }
 

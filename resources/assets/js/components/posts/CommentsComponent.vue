@@ -2,7 +2,7 @@
 
     <div class="comments">
         <hr v-if="postId">
-        <h3 class="mb-4">Comments ({{ comments.length }})</h3>
+        <h3 class="mb-4">Comments ({{ totalCommentCount }})</h3>
         <!-- show created comment form if exists postId -->
         <div class="create-comment mb-4" v-if="postId">
             <!-- Form Errors -->
@@ -30,7 +30,7 @@
             </form>
         </div>
         <CommentComponent
-                @replied="applied"
+                @replied="replied"
                 v-for="comment in comments"
                 :comment="comment"
                 :key="comment.id">
@@ -51,11 +51,12 @@
   import CommentComponent from './CommentComponent.vue';
 
   export default {
-    props: ['postId', 'requestUrl','requestMethod'],
+    props: ['postId', 'requestUrl', 'requestMethod'],
     data() {
       return {
         comments: [],
         nextCommentsUrl: null,
+        totalCommentCount: null,
         createForm: {
           errors: [],
           contents: '',
@@ -77,28 +78,32 @@
         axios[this.requestMethod](this.requestUrl).then(response => {
           this.comments = response.data.data;
           this.nextCommentsUrl = response.data.next_page_url;
+          this.totalCommentCount = response.data.total;
+          console.log(response.data);
         });
       },
       loadMoreComments() {
-        let moreCommentsBtn = this.$refs.moreComments;
-        moreCommentsBtn.textContent = 'loading...';
+        let moreButton = this.$refs.moreComments;
+        moreButton.textContent = 'loading...';
         if (!this.nextCommentsUrl) {
-          moreCommentsBtn.classList.add('disabled');
-          moreCommentsBtn.setAttribute('disabled', 'disabled');
-          moreCommentsBtn.textContent = 'No more';
+          this.disableMoreButton(moreButton);
+          return;
         }
         axios[this.requestMethod](this.nextCommentsUrl).then(response => {
           this.comments = this.comments.concat(response.data.data);
           if (response.data.next_page_url) {
             this.nextCommentsUrl = response.data.next_page_url;
-            moreCommentsBtn.textContent = 'Load more comments';
+            moreButton.textContent = 'Load more comments';
           } else {
             this.nextCommentsUrl = null;
-            moreCommentsBtn.classList.add('disabled');
-            moreCommentsBtn.setAttribute('disabled', 'disabled');
-            moreCommentsBtn.textContent = 'No more';
+            this.disableMoreButton(moreButton);
           }
         });
+      },
+      disableMoreButton(moreButton) {
+        moreButton.classList.add('disabled');
+        moreButton.setAttribute('disabled', 'disabled');
+        moreButton.textContent = 'No more';
       },
 
       clearError() {
@@ -114,6 +119,8 @@
           this.createForm.target_user_id = null;
           this.createForm.target_comment_id = null;
           this.comments.unshift(response.data);
+          this.$emit('newOrReplied');
+          this.totalCommentCount += 1;
         }).catch(error => {
           if (typeof error.response.data === 'object') {
             this.createForm.errors = _.flatten(_.toArray(error.response.data.errors));
@@ -123,8 +130,10 @@
           }
         });
       },
-      applied(comment) {
+      replied(comment) {
         this.comments.unshift(comment);
+        this.$emit('newOrReplied');
+        this.totalCommentCount += 1;
       }
 
     }

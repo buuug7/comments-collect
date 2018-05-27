@@ -180,7 +180,7 @@ class PostController extends Controller
         $result = $post->comments()
             ->latest()
             ->with('user', 'targetUser', 'targetComment')
-            ->simplePaginate(5);
+            ->paginate(5);
         return response()->json($result);
     }
 }

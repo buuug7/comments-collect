@@ -104,6 +104,7 @@
                             v-if="showComments"
                             :post-id="postClone.id"
                             :request-url="'/posts/'+postClone.id+'/comments'"
+                            @newOrReplied="newOrReplied"
                             request-method="post">
                     </CommentsComponent>
                 </div>
@@ -259,13 +260,13 @@
           this.editForm.tagsArray.push(v.name);
         });
 
-        $("#editModal-"+this.postClone.id).modal('show');
+        $("#editModal-" + this.postClone.id).modal('show');
       },
       updatePost() {
         axios.put(`/posts/${this.editForm.id}`, this.editForm).then(response => {
           this.postClone = response.data;
           this.resetEditForm();
-          $("#editModal-"+this.postClone.id).modal('hide');
+          $("#editModal-" + this.postClone.id).modal('hide');
         }).catch(error => {
           if (typeof error.response.data === 'object') {
             this.editForm.errors = _.flatten(_.toArray(error.response.data.errors));
@@ -295,6 +296,11 @@
         let postContentsDom = this.$refs.postContents;
         postContentsDom.style.maxHeight = 'none';
         postContentsDom.lastElementChild.style.display = 'none';
+      },
+
+      newOrReplied() {
+        console.log('new or replied!');
+        this.postClone.comments_count += 1;
       }
     },
   }

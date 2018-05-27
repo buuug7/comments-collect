@@ -50,7 +50,7 @@
         let moreButton = this.$refs.moreButton;
         moreButton.textContent = 'Loading...';
         if (!this.nextPageUrl) {
-          this.disabledButton(moreButton);
+          this.disableMoreButton(moreButton);
           return;
         }
         axios[this.requestMethod](this.nextPageUrl).then(response => {
@@ -60,11 +60,11 @@
             moreButton.textContent = 'Load more';
           } else {
             this.nextPageUrl = null;
-            this.disabledButton(moreButton);
+            this.disableMoreButton(moreButton);
           }
         });
       },
-      disabledButton(moreButton) {
+      disableMoreButton(moreButton) {
         moreButton.classList.add('disabled');
         moreButton.setAttribute('disabled', 'disabled');
         moreButton.textContent = 'No more';
