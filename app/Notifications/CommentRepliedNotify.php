@@ -15,6 +15,7 @@ class CommentRepliedNotify extends Notification
 
     public $comment;
     public $repliedComment;
+    public $message;
 
     /**
      * Create a new notification instance.
@@ -25,6 +26,7 @@ class CommentRepliedNotify extends Notification
     {
         $this->comment = $comment;
         $this->repliedComment = $repliedComment;
+        $this->message = 'Your comment have replied';
     }
 
     /**
@@ -58,6 +60,7 @@ class CommentRepliedNotify extends Notification
     public function toArray($notifiable)
     {
         return [
+            'message' => $this->message,
             'comment_id' => $this->comment->id,
             'replied_comment_id' => $this->repliedComment->id,
         ];

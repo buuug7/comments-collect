@@ -21,11 +21,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // Posts
-Route::view('/contribute', 'contribute')->middleware('auth');
-
 Route::post('/posts/{post}/star', 'PostController@star');
-Route::get('/posts/{post}/comments', 'PostController@comments');
+Route::post('/posts/{post}/comments', 'PostController@comments');
 Route::resource('posts', 'PostController');
+
+Route::view('/contribute', 'contribute')->middleware('auth');
 
 // Comments
 Route::post('/comments/{comment}/like', 'CommentController@like');
@@ -41,13 +41,13 @@ Route::resource('tags', 'TagController');
 
 // User
 Route::post('/users/avatar', 'UserController@avatar');
-Route::get('/users/profile', 'UserController@profile');
+Route::post('/users/profile', 'UserController@profile');
 Route::put('/users/profile', 'UserController@updateProfile');
-Route::get('/users/posts','UserController@posts');
-Route::get('/users/posts/star','UserController@starPosts');
-Route::get('/users/comments','UserController@comments');
-Route::get('/users/comments/liked','UserController@likedComments');
-Route::get('/users/notifications','UserController@notifications');
+Route::post('/users/posts','UserController@posts');
+Route::post('/users/posts/star','UserController@starPosts');
+Route::post('/users/comments','UserController@comments');
+Route::post('/users/comments/liked','UserController@likedComments');
+Route::post('/users/notifications','UserController@notifications');
 
 
 Route::view('/users/my/posts','users.my-posts')->middleware('auth');
@@ -58,9 +58,7 @@ Route::view('/users/my/notifications','users.my-notifications');
 
 
 // Settings
-Route::get('/settings/profile', function () {
-    return view('settings.profile');
-})->middleware('auth');
+Route::view('/settings/profile', 'settings.profile')->middleware('auth');
 
 
 // Help
@@ -74,7 +72,7 @@ Route::view('/ui/headline','ui.headline');
 
 
 // Test
-Route::get('/test',function (){
-    \App\Jobs\TestJob::dispatch()->delay(now()->addSecond(5));
+Route::get('/test',function (\Illuminate\Http\Request $request){
+    //return $request->user()->unreadNotifyCount();
 });
 

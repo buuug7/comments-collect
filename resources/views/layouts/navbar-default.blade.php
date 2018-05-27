@@ -28,7 +28,9 @@
 					<li class="nav-item">
 						<a class="nav-link position-relative" href="{{ url('/users/my/notifications') }}">
 							<i class="fa fa-bell-o"></i>
-							<span class="icon-unread"></span>
+							@if (Auth::user()->unreadNotifications->count() > 0)
+								<span class="icon-unread"></span>
+							@endif
 						</a>
 					</li>
 					<li class="nav-item dropdown">

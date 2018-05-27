@@ -9,7 +9,8 @@
 			<div class="col-md-8">
 				<comments-component
 						:post-id="null"
-						request-url="/users/comments">
+						request-url="/users/comments"
+						request-method="post">
 				</comments-component>
 			</div>
 		</div>

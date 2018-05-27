@@ -20,7 +20,7 @@
   import PostComponent from './PostComponent.vue';
 
   export default {
-    props:['requestUrl'],
+    props:['requestUrl','requestMethod'],
     data() {
       return {
         posts: [],
@@ -29,7 +29,7 @@
     },
 
     mounted() {
-      axios.get(this.requestUrl).then(response => {
+      axios[this.requestMethod](this.requestUrl).then(response => {
         this.posts = response.data.data;
         this.nextPageUrl = response.data.next_page_url;
       });
@@ -46,7 +46,7 @@
           return;
         }
 
-        axios.get(this.nextPageUrl).then(response => {
+        axios[this.requestMethod](this.nextPageUrl).then(response => {
           this.posts = this.posts.concat(response.data.data);
           if (response.data.next_page_url) {
             this.nextPageUrl = response.data.next_page_url;

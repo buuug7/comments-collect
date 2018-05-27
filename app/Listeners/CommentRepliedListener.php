@@ -29,6 +29,7 @@ class CommentRepliedListener
     public function handle(CommentReplied $event)
     {
         // send a comment replied notification
-        User::find($event->comment->user_id)->notify((new CommentRepliedNotify($event->comment,$event->repliedComment)));
+        User::find($event->comment->user_id)
+            ->notify((new CommentRepliedNotify($event->comment, $event->repliedComment)));
     }
 }

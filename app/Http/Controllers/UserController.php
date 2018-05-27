@@ -144,9 +144,15 @@ class UserController extends Controller
         return response()->json($result);
     }
 
+
+    /**
+     * return the user unread notifications
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function notifications(Request $request)
     {
-        $result = $request->user()->notifications->groupBy('type')->toArray();
+        $result = $request->user()->unreadNotifications()->simplePaginate(15);
         return response()->json($result);
     }
 

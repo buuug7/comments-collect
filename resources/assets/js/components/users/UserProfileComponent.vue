@@ -76,7 +76,7 @@
     },
     methods: {
       getUser() {
-        axios.get('/users/profile')
+        axios.post('/users/profile')
           .then(response => {
             this.userForm = response.data;
           })

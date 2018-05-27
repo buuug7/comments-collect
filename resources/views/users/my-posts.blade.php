@@ -7,7 +7,10 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8">
-				<posts-component request-url="/users/posts"></posts-component>
+				<posts-component
+						request-url="/users/posts"
+						request-method="post">
+				</posts-component>
 			</div>
 		</div>
 	</div>

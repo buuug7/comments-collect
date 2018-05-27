@@ -51,7 +51,7 @@
   import CommentComponent from './CommentComponent.vue';
 
   export default {
-    props: ['postId', 'requestUrl'],
+    props: ['postId', 'requestUrl','requestMethod'],
     data() {
       return {
         comments: [],
@@ -74,7 +74,7 @@
     },
     methods: {
       loadComments() {
-        axios.get(this.requestUrl).then(response => {
+        axios[this.requestMethod](this.requestUrl).then(response => {
           this.comments = response.data.data;
           this.nextCommentsUrl = response.data.next_page_url;
         });
@@ -87,7 +87,7 @@
           moreCommentsBtn.setAttribute('disabled', 'disabled');
           moreCommentsBtn.textContent = 'No more';
         }
-        axios.get(this.nextCommentsUrl).then(response => {
+        axios[this.requestMethod](this.nextCommentsUrl).then(response => {
           this.comments = this.comments.concat(response.data.data);
           if (response.data.next_page_url) {
             this.nextCommentsUrl = response.data.next_page_url;

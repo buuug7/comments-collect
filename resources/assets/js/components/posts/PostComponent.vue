@@ -103,7 +103,8 @@
                     <CommentsComponent
                             v-if="showComments"
                             :post-id="postClone.id"
-                            :request-url="'/posts/'+postClone.id+'/comments'">
+                            :request-url="'/posts/'+postClone.id+'/comments'"
+                            request-method="post">
                     </CommentsComponent>
                 </div>
 
