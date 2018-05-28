@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Events\CommentReplied;
+use App\Events\PostCommented;
 use App\Notifications\CommentRepliedNotify;
+use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -55,7 +57,11 @@ class CommentController extends Controller
             'target_comment_id' => $request->target_user_id,
         ]);
 
+
+        event(new PostCommented(Post::find($request->post_id), $comment));
+
         $result = $comment->load('user');
+
         return response()->json($result);
     }
 
@@ -67,7 +73,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $result = Comment::with(['user', 'targetUser', 'targetComment','repliedComments'])
+        $result = Comment::with(['user', 'targetUser', 'targetComment', 'repliedComments'])
             ->where('id', $comment->id)->first();
         return response()->json($result);
     }
@@ -147,7 +153,7 @@ class CommentController extends Controller
 
         $result = $replyComment->load(['user', 'targetUser', 'targetComment']);
 
-        event(new CommentReplied($comment,$replyComment));
+        event(new CommentReplied($comment, $replyComment));
 
         return response()->json($result);
     }

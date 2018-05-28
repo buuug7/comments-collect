@@ -7,6 +7,11 @@
                     :key="notification.id">
             </CommentRepliedNotificationComponent>
 
+            <PostCommentedNotificationComponent
+                    v-else-if="notification.type === 'App\\Notifications\\PostCommentedNotify'"
+                    :notification="notification"
+                    :key="notification.id">
+            </PostCommentedNotificationComponent>
             <div v-else>
                 TODO
             </div>
@@ -26,11 +31,13 @@
 
 <script>
   import CommentRepliedNotificationComponent from './CommentRepliedNotificationComponent.vue';
+  import PostCommentedNotificationComponent from './PostCommentedNotificationComponent.vue';
 
   export default {
     props: ['requestUrl','requestMethod'],
     components: {
       CommentRepliedNotificationComponent,
+      PostCommentedNotificationComponent,
     },
     data() {
       return {

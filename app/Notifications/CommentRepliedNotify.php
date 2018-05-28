@@ -26,7 +26,7 @@ class CommentRepliedNotify extends Notification
     {
         $this->comment = $comment;
         $this->repliedComment = $repliedComment;
-        $this->message = 'Your comment have replied';
+        $this->message = 'Your comment have new replied';
     }
 
     /**

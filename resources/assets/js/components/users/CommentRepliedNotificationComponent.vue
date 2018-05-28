@@ -15,7 +15,7 @@
                class="btn btn-outline-primary btn-sm">Detail</a>
             <a href="javascript:"
                v-if="!read"
-               @click.prevent="markedAsRead"
+               @click.prevent="markAsRead"
                class="btn btn-outline-primary btn-sm">
                 Mark as read <i class="fa fa-check"></i>
             </a>
@@ -24,7 +24,6 @@
                class="btn btn-primary btn-sm">
                 <i class="fa fa-check"></i>
             </a>
-
         </div>
         <div class="notification__detail" v-if="showDetail">
             <CommentComponent
@@ -80,8 +79,8 @@
           this.repliedComment = response.data;
         });
       },
-      markedAsRead() {
-        let confirmed = confirm('Do you really want to mark as read?');
+      markAsRead() {
+        let confirmed = confirm('Do you really want to mark this as read?');
         if (!confirmed) {
           return;
         }

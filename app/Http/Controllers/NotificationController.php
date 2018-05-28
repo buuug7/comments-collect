@@ -11,7 +11,7 @@ class NotificationController extends Controller
        $noti = $request->user()->notifications()->find($noficiationId);
        $noti->delete();
        return response()->json([
-           'message' => 'yes ,it readed and delete',
+           'message' => 'Yes, already mark as read',
        ]);
 
     }

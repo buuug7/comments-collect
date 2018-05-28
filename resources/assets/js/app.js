@@ -23,10 +23,8 @@ Vue.use(VueContentPlaceholders);
  */
 
 // posts comments
-Vue.component('post-component',require('./components/posts/PostComponent.vue'));
 Vue.component('posts-component',require('./components/posts/PostsComponent.vue'));
 Vue.component('post-create-component',require('./components/posts/PostCreateComponent.vue'));
-Vue.component('comment-component',require('./components/posts/CommentComponent.vue'));
 Vue.component('comments-component',require('./components/posts/CommentsComponent.vue'));
 
 // users
