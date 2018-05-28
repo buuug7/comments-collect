@@ -126,7 +126,6 @@
             </content-placeholders>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -137,6 +136,7 @@
         commentClone: null,
         deleted: false,
         errors: [],
+        showRepliedCommentsList:false,
         replyForm: {
           contents: '',
           post_id: null,
@@ -145,6 +145,9 @@
           target_comment_id: null,
         }
       };
+    },
+    components:{
+      //
     },
     mounted() {
       setTimeout(() => {

@@ -32,7 +32,6 @@
                     :post="post">
             </PostComponent>
             <CommentComponent
-                    class="pl-4"
                     v-if="comment"
                     :comment="comment">
             </CommentComponent>

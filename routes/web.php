@@ -69,6 +69,7 @@ Route::get('/help/contribute-guide', function () {
 // UI
 Route::view('/ui/common','ui.common');
 Route::view('/ui/headline','ui.headline');
+Route::view('/ui/user-widget','ui.user-widget');
 
 
 // Test

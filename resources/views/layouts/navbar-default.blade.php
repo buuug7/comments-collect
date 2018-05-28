@@ -11,7 +11,7 @@
 			<!-- Left Side Of Navbar -->
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="/post-create">Ranking list</a>
+					<a class="nav-link" href="#">Ranking list</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ url('/contribute') }}">Contribute</a>
