@@ -47,11 +47,10 @@
 							<a class="dropdown-item" href="{{ url('/users/my/comments') }}">My Comments</a>
 
 							<a class="dropdown-item" href="{{ url('/users/my/comments/liked') }}">Liked Comments</a>
-
-							<a class="dropdown-item" href="{{ url('/settings/profile') }}">Profile</a>
-
 							<div class="dropdown-divider"></div>
 
+							<a class="dropdown-item" href="{{ url('/settings/profile') }}">Profile</a>
+							<a class="dropdown-item" href="{{ url('/settings/developer') }}">Developer</a>
 							<a class="dropdown-item"
 							   href="{{ route('logout') }}"
 							   onclick="event.preventDefault();

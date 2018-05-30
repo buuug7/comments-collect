@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PostCommented' => [
             'App\Listeners\PostCommentedListener'
         ],
+        'App\Events\PostStar' => [
+            'App\Listeners\PostStarListener'
+        ],
     ];
 
     protected $subscribe = [

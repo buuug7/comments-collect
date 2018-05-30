@@ -33,7 +33,7 @@
         <div v-if="postClone">
             <div class="card post mb-5 rounded-0 border-0 box-shadow-3">
                 <div class="card-header text-center">
-                    Added by <a href="#">{{ postClone.user.name }}</a>
+                    Added by <a :href="'/people/'+postClone.user.email ">{{ postClone.user.name }}</a>
                 </div>
                 <div class="card-body">
 

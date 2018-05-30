@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,6 +13,18 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+
+    /**
+     * Display the specified resource.
+     * @param $email
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($email)
+    {
+        $user = User::where('email',$email)->firstOrFail();
+        return response()->json($user);
     }
 
     /**

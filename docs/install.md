@@ -6,4 +6,4 @@
 + `php artisan key:generate`
 + `php artisan storage:link`
 + `php artisan migrate:refresh` generate database tables.
-+ 
++ `php artisan passport:install` or `php artisan passport:keys`

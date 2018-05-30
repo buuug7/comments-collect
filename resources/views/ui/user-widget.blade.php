@@ -12,12 +12,12 @@
 						<div style="bottom: -50px;left: 50%;transform:translate(-50%,0)"
 							 class="user-widget__img position-absolute">
 							<img class="rounded-circle"
-								 src="{{ Auth::user()->getAvatar() }}"
+								 src="/images/default-avatar.png"
 								 style="width: 100px;height:100px;border:3px solid #fff;">
 						</div>
 					</div>
 					<div class="text-center px-3 pt-4 mt-5">
-						<h3 class="mb-3">{{ Auth::user()->name }}</h3>
+						<h3 class="mb-3">Buuug7.Twice</h3>
 						<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos!</p>
 						<a href="#" class="btn btn-outline-primary btn-sm">Follow</a>
 					</div>

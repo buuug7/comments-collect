@@ -50,7 +50,9 @@
     <div v-if="!deleted">
         <div v-if="commentClone" class="comment mb-4">
             <div class="comment__header mb-2">
-                <img :src="commentClone.user.avatar_url" class="comment__header-avatar mr-3" alt="">
+                <a :href="'/people/'+commentClone.user.email">
+                    <img :src="commentClone.user.avatar_url" class="comment__header-avatar mr-3" alt="">
+                </a>
                 <div class="comment__header-author">
                     <span>{{ commentClone.user.name }}</span>
                     <span class="text-muted small">

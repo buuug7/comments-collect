@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostStar;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show','comments']);
+        $this->middleware('auth')->except(['index', 'show', 'comments']);
     }
 
     /**
@@ -162,14 +163,20 @@ class PostController extends Controller
 
 
     /**
-     * [User $user] star or dis star a [Post $post]
+     * request user star or dis star a specified resource
      * @param Request $request
      * @param Post $post
      * @return mixed
      */
     public function star(Request $request, Post $post)
     {
-        $result = $request->user()->starPosts()->toggle($post->id);
+
+        $star = $request->user()->starPosts()->toggle($post->id);
+
+        // trigger PostStar event if attached
+        if (count($star['attached'])) {
+            event(new PostStar($post, $request->user()));
+        }
 
         return Post::find($post->id)->load(['user', 'tags']);
     }

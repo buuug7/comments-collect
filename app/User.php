@@ -2,14 +2,14 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +30,10 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'avatar_url'
+        'avatar_url',
+        'created_posts_count',
+        'created_comments_count',
+        'liked_comments_count'
     ];
 
     /**
@@ -52,6 +55,37 @@ class User extends Authenticatable
     {
         return $this->getAvatar();
     }
+
+    /**
+     * append attribute [created_posts_count]
+     * return the count of created posts
+     * @return int
+     */
+    public function getCreatedPostsCountAttribute()
+    {
+        return $this->posts()->count();
+    }
+
+    /**
+     * append attribute [created_comments_count]
+     * return the count of created comments
+     * @return int
+     */
+    public function getCreatedCommentsCountAttribute()
+    {
+        return $this->comments()->count();
+    }
+
+    /**
+     * append attribute [liked_comments_count]
+     * return the count of liked comments
+     * @return int
+     */
+    public function getLikedCommentsCountAttribute()
+    {
+        return $this->likedComments()->count();
+    }
+
 
     /**
      * user created posts
