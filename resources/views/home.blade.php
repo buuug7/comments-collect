@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-8 mb-4">
 				<posts-component
-						request-url="/posts"
+						request-url="/api/posts"
 						request-method="get">
 				</posts-component>
 			</div>

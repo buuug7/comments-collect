@@ -21,16 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // Posts
-Route::post('/posts/{post}/star', 'PostController@star');
-Route::post('/posts/{post}/comments', 'PostController@comments');
-Route::resource('posts', 'PostController');
 
 Route::view('/contribute', 'contribute')->middleware('auth');
 
 // Comments
-Route::post('/comments/{comment}/like', 'CommentController@like');
-Route::post('/comments/{comment}/reply', 'CommentController@reply');
-Route::resource('comments', 'CommentController');
 
 // Notifications
 Route::post('/notifications/{id}/read', 'NotificationController@markAsRead');

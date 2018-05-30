@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Post extends Model
 {
@@ -66,7 +67,7 @@ class Post extends Model
     }
 
     /**
-     * append attribute [has_star_by_request_user]
+     * append attribute has_star_by_request_user
      * detect whether the post is star by request user
      * @return bool|mixed
      */
@@ -79,20 +80,21 @@ class Post extends Model
     }
 
     /**
-     * append attribute [has_owned_by_request_user]
+     * append attribute has_owned_by_request_user
      * detect whether the post is owned by request user
      * @return bool
      */
     public function getHasOwnedByRequestUserAttribute()
     {
-        if (Auth::check()) {
-            return $this->hasOwnedByGivenUser(Auth::user());
+
+        if ($this->check()) {
+            return $this->hasOwnedByGivenUser(Auth::user() ? Auth::user() : Auth::guard('api')->user());
         }
         return false;
     }
 
     /**
-     * append attribute [star_users_count]
+     * append attribute star_users_count
      * get the star users count
      * @return int
      */
@@ -125,4 +127,8 @@ class Post extends Model
         return $user->id === $this->user_id;
     }
 
+    public function check()
+    {
+        return Auth::check() ? Auth::check() : Auth::guard('api')->check();
+    }
 }

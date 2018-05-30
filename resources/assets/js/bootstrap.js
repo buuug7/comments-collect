@@ -54,8 +54,3 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
-
-let user = document.head.querySelector('meta[name="user"]').content;
-if (user) {
-  window.user = JSON.parse(user);
-}

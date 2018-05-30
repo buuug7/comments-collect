@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Comment extends Model
 {
@@ -84,7 +85,7 @@ class Comment extends Model
 
 
     /**
-     * append attribute [like_count]
+     * append attribute like_count
      * get the liked user count
      * @return int
      */
@@ -94,7 +95,7 @@ class Comment extends Model
     }
 
     /**
-     * append attribute [has_liked_by_request_user]
+     * append attribute has_liked_by_request_user
      * detect the comment is liked by request user
      * @return bool
      */
@@ -107,7 +108,7 @@ class Comment extends Model
     }
 
     /**
-     * append attribute [has_owned_by_request_user]
+     * append attribute has_owned_by_request_user
      * detect the comment is owned by request user
      * @return bool
      */

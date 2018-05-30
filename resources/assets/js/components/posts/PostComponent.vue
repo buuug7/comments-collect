@@ -103,9 +103,9 @@
                     <CommentsComponent
                             v-if="showComments"
                             :post-id="postClone.id"
-                            :request-url="'/posts/'+postClone.id+'/comments'"
+                            :request-url="'/api/posts/'+postClone.id+'/comments'"
                             @newOrReplied="newOrReplied"
-                            request-method="post">
+                            request-method="get">
                     </CommentsComponent>
                 </div>
 
@@ -226,7 +226,7 @@
     },
     methods: {
       star() {
-        axios.post(`/posts/${this.post.id}/star`).then(response => {
+        axios.post(`/api/posts/${this.post.id}/star`).then(response => {
           this.postClone = response.data;
         }).catch(error => {
           this.errors = [error.response.data.message, 'Maybe you need login first.'];
@@ -237,7 +237,7 @@
         if (!disStar) {
           return;
         }
-        axios.delete(`/posts/${this.post.id}`).then(response => {
+        axios.delete(`/api/posts/${this.post.id}`).then(response => {
           this.postClone = null;
           this.deleted = true;
         }).catch(error => {
@@ -263,7 +263,7 @@
         $("#editModal-" + this.postClone.id).modal('show');
       },
       updatePost() {
-        axios.put(`/posts/${this.editForm.id}`, this.editForm).then(response => {
+        axios.put(`/api/posts/${this.editForm.id}`, this.editForm).then(response => {
           this.postClone = response.data;
           this.resetEditForm();
           $("#editModal-" + this.postClone.id).modal('hide');

@@ -112,7 +112,7 @@
 
       addNewComment() {
         this.createForm.post_id = this.postId;
-        axios.post('/comments', this.createForm).then(response => {
+        axios.post('/api/comments', this.createForm).then(response => {
           this.createForm.contents = '';
           this.createForm.post_id = null;
           //this.createForm.user_id = null;

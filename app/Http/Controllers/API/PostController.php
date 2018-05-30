@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Events\PostStar;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show', 'comments']);
+        $this->middleware('auth:api')->except(['index','show','comments']);
     }
 
     /**
@@ -25,16 +23,6 @@ class PostController extends Controller
     {
         $posts = Post::with(['user', 'tags'])->latest()->paginate(5);
         return response()->json($posts);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -89,18 +77,6 @@ class PostController extends Controller
     {
         $result = $post->load(['user', 'tags']);
         return response()->json($result);
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
     }
 
     /**
@@ -151,6 +127,7 @@ class PostController extends Controller
      *
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function destroy(Post $post)
     {
@@ -182,6 +159,12 @@ class PostController extends Controller
     }
 
 
+    /**
+     * return the comments under specified resource
+     * @param Request $request
+     * @param Post $post
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function comments(Request $request, Post $post)
     {
         $result = $post->comments()

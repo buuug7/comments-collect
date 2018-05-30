@@ -67,7 +67,7 @@
     },
     methods: {
       create() {
-        axios.post('/posts', this.createForm).then(response => {
+        axios.post('/api/posts', this.createForm).then(response => {
           this.message = response.data.message;
           this.clear();
         }).catch(error => {

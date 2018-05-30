@@ -184,7 +184,7 @@
         }
       },
       likeComment() {
-        axios.post(`/comments/${this.comment.id}/like`).then(response => {
+        axios.post(`/api/comments/${this.comment.id}/like`).then(response => {
           this.commentClone = response.data;
           this.clearError();
         }).catch(error => {
@@ -200,7 +200,7 @@
         this.replyForm.post_id = this.commentClone.post_id;
         this.replyForm.target_user_id = this.commentClone.user_id;
         this.replyForm.target_comment_id = this.commentClone.id;
-        axios.post(`/comments/${this.commentClone.id}/reply`, this.replyForm).then(response => {
+        axios.post(`/api/comments/${this.commentClone.id}/reply`, this.replyForm).then(response => {
           this.$emit('replied', response.data);
           this.resetReplyForm();
           this.toggleReplyForm();
@@ -218,7 +218,7 @@
         if (!confirmDelete) {
           return;
         }
-        axios.delete(`/comments/${this.comment.id}`).then(response => {
+        axios.delete(`/api/comments/${this.comment.id}`).then(response => {
           this.commentClone = null;
           this.deleted = true;
         });
