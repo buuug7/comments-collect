@@ -40,7 +40,7 @@
       };
     },
     mounted() {
-      axios.get(`/users/${this.email}`).then(response => {
+      axios.get(`/api/users/${this.email}`).then(response => {
         this.user = response.data;
       });
     }
