@@ -8,8 +8,8 @@
 		<div class="row">
 			<div class="col-md-8">
 				<posts-component
-						request-url="/users/posts"
-						request-method="post">
+						request-url="/api/user/posts"
+						request-method="get">
 				</posts-component>
 			</div>
 		</div>

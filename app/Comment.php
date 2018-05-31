@@ -101,10 +101,13 @@ class Comment extends Model
      */
     public function getHasLikedByRequestUserAttribute()
     {
-        if (Auth::check()) {
-            return $this->hasLikedByGivenUser(Auth::user());
+        $authUser = Auth::guard('api')->check() ? Auth::guard('api')->user() : Auth::user();
+
+        if (is_null($authUser)) {
+            return false;
         }
-        return false;
+
+        return $this->hasLikedByGivenUser($authUser);
     }
 
     /**
@@ -114,10 +117,13 @@ class Comment extends Model
      */
     public function getHasOwnedByRequestUserAttribute()
     {
-        if (Auth::check()) {
-            return $this->hasOwnedByGivenUser(Auth::user());
+        $authUser = Auth::guard('api')->check() ? Auth::guard('api')->user() : Auth::user();
+
+        if (is_null($authUser)) {
+            return false;
         }
-        return false;
+
+        return $this->hasOwnedByGivenUser($authUser);
     }
 
 

@@ -73,11 +73,11 @@
         this.loadDetail();
       },
       loadDetail() {
-        axios.get(`/posts/${this.notificationClone.data.post_id}`).then(response => {
+        axios.get(`/api/posts/${this.notificationClone.data.post_id}`).then(response => {
           this.post = response.data;
         });
 
-        axios.get(`/comments/${this.notificationClone.data.comment_id }`).then(response => {
+        axios.get(`/api/comments/${this.notificationClone.data.comment_id }`).then(response => {
           this.comment = response.data;
         });
       },
@@ -86,7 +86,7 @@
         if (!confirmed) {
           return;
         }
-        axios.post(`/notifications/${this.notificationClone.id}/read`).then(response => {
+        axios.post(`/api/notifications/${this.notificationClone.id}/read`).then(response => {
           this.read = true;
         });
       }

@@ -73,10 +73,13 @@ class Post extends Model
      */
     public function getHasStarByRequestUserAttribute()
     {
-        if (Auth::check()) {
-            return $this->hasStarByGivenUser(Auth::user());
+        $authUser = Auth::guard('api')->check() ? Auth::guard('api')->user() : Auth::user();
+
+        if (is_null($authUser)) {
+            return false;
         }
-        return false;
+
+        return $this->hasStarByGivenUser($authUser);
     }
 
     /**
@@ -86,11 +89,13 @@ class Post extends Model
      */
     public function getHasOwnedByRequestUserAttribute()
     {
+        $authUser = Auth::guard('api')->check() ? Auth::guard('api')->user() : Auth::user();
 
-        if ($this->check()) {
-            return $this->hasOwnedByGivenUser(Auth::user() ? Auth::user() : Auth::guard('api')->user());
+        if (is_null($authUser)) {
+            return false;
         }
-        return false;
+
+        return $this->hasOwnedByGivenUser($authUser);
     }
 
     /**
@@ -125,10 +130,5 @@ class Post extends Model
     public function hasOwnedByGivenUser(User $user)
     {
         return $user->id === $this->user_id;
-    }
-
-    public function check()
-    {
-        return Auth::check() ? Auth::check() : Auth::guard('api')->check();
     }
 }

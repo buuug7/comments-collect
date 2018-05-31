@@ -115,7 +115,7 @@
         canvas.toBlob(function (blob) {
           let formData = new FormData();
           formData.append('avatar', blob);
-          axios.post('/users/avatar', formData).then((response) => {
+          axios.post('/api/user/avatar', formData).then((response) => {
             let fileWrap = that.$refs.fileWrap;
             fileWrap.style.backgroundImage = `url(${response.data.avatar_url})`;
             that.closeModal();

@@ -56,6 +56,7 @@
 </template>
 <script>
   export default {
+    props: ['email'],
     data() {
       return {
         errors: [],
@@ -76,14 +77,14 @@
     },
     methods: {
       getUser() {
-        axios.post('/users/profile')
+        axios.get(`/api/users/${this.email}`)
           .then(response => {
             this.userForm = response.data;
           })
       },
       update() {
         this.clear();
-        axios.put('/users/profile', this.userForm)
+        axios.put('/api/user/profile', this.userForm)
           .then(response => {
             this.userForm = response.data.user;
             this.message = response.data.message;

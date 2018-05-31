@@ -8,8 +8,8 @@
 		<div class="row">
 			<div class="col-md-8">
 				<user-notifications-component
-						request-url="{{ url('/users/notifications') }}"
-						request-method="post">
+						request-url="{{ url('/api/user/notifications') }}"
+						request-method="get">
 				</user-notifications-component>
 			</div>
 		</div>

@@ -26,7 +26,7 @@
 					<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
 				@else
 					<li class="nav-item">
-						<a class="nav-link position-relative" href="{{ url('/users/my/notifications') }}">
+						<a class="nav-link position-relative" href="{{ url('/my/notifications') }}">
 							<i class="fa fa-bell-o"></i>
 							@if (Auth::user()->unreadNotifications->count() > 0)
 								<span class="icon-unread"></span>
@@ -40,13 +40,13 @@
 
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-							<a class="dropdown-item" href="{{ url('/users/my/posts') }}">My Posts</a>
+							<a class="dropdown-item" href="{{ url('/my/posts') }}">My Posts</a>
 
-							<a class="dropdown-item" href="{{ url('/users/my/posts/star') }}">Star Posts</a>
+							<a class="dropdown-item" href="{{ url('/my/posts/star') }}">Star Posts</a>
 
-							<a class="dropdown-item" href="{{ url('/users/my/comments') }}">My Comments</a>
+							<a class="dropdown-item" href="{{ url('/my/comments') }}">My Comments</a>
 
-							<a class="dropdown-item" href="{{ url('/users/my/comments/liked') }}">Liked Comments</a>
+							<a class="dropdown-item" href="{{ url('/my/comments/liked') }}">Liked Comments</a>
 							<div class="dropdown-divider"></div>
 
 							<a class="dropdown-item" href="{{ url('/settings/profile') }}">Profile</a>

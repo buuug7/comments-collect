@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\PostStar;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;

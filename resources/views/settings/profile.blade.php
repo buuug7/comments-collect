@@ -21,7 +21,9 @@
 			<div class="headline-v2 mt-5">
 				<h4 class="title">Profile</h4>
 			</div>
-			<user-profile-component></user-profile-component>
+			<user-profile-component
+					email="{{ Auth::user()->email }}"
+			></user-profile-component>
 		</div>
 	</div>
 
