@@ -138,17 +138,18 @@
         commentClone: null,
         deleted: false,
         errors: [],
-        showRepliedCommentsList:false,
+        showRepliedCommentsList: false,
         replyForm: {
           contents: '',
-          post_id: null,
+          commentable_id: null,
+          commentable_type: null,
           // user_id: null,
           target_user_id: null,
           target_comment_id: null,
         }
       };
     },
-    components:{
+    components: {
       //
     },
     mounted() {
@@ -168,7 +169,8 @@
       },
       resetReplyForm() {
         this.replyForm.contents = '';
-        this.replyForm.post_id = null;
+        this.replyForm.commentable_id = null;
+        this.replyForm.commentable_type = null;
         this.replyForm.target_user_id = null;
         this.replyForm.target_comment_id = null;
       },
@@ -197,7 +199,8 @@
         });
       },
       reply() {
-        this.replyForm.post_id = this.commentClone.post_id;
+        this.replyForm.commentable_id = this.commentClone.commentable_id;
+        this.replyForm.commentable_type = this.commentClone.commentable_type;
         this.replyForm.target_user_id = this.commentClone.user_id;
         this.replyForm.target_comment_id = this.commentClone.id;
         axios.post(`/api/comments/${this.commentClone.id}/reply`, this.replyForm).then(response => {

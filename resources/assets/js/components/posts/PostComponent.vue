@@ -102,7 +102,8 @@
                     </div>
                     <CommentsComponent
                             v-if="showComments"
-                            :post-id="postClone.id"
+                            :commentable-id="postClone.id"
+                            commentable-type="App\Post"
                             :request-url="'/api/posts/'+postClone.id+'/comments'"
                             @newOrReplied="newOrReplied"
                             request-method="get">

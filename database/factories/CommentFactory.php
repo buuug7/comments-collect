@@ -5,9 +5,10 @@ use Faker\Generator as Faker;
 $factory->define(App\Comment::class, function (Faker $faker) {
     return [
         'contents' => $faker->text(200),
-        'post_id' => function () {
+        'commentable_id' => function () {
             return factory(\App\Post::class)->create()->id;
         },
+        'commentable_type' => 'App\Post',
         'user_id' => function () {
             return factory(\App\User::class)->create()->id;
         },

@@ -1,10 +1,10 @@
 <template>
 
     <div class="comments">
-        <hr v-if="postId">
+        <hr v-if="commentableId">
         <h3 class="mb-4">Comments ({{ totalCommentCount }})</h3>
-        <!-- show created comment form if exists postId -->
-        <div class="create-comment mb-4" v-if="postId">
+        <!-- show created comment form if exists commentableId -->
+        <div class="create-comment mb-4" v-if="commentableId">
             <!-- Form Errors -->
             <div class="alert alert-danger" v-if="createForm.errors.length > 0">
                 <ul class="mb-0">
@@ -51,7 +51,7 @@
   import CommentComponent from './CommentComponent.vue';
 
   export default {
-    props: ['postId', 'requestUrl', 'requestMethod'],
+    props: ['commentableId', 'commentableType', 'requestUrl', 'requestMethod'],
     data() {
       return {
         comments: [],
@@ -60,7 +60,8 @@
         createForm: {
           errors: [],
           contents: '',
-          post_id: null,
+          commentable_id: null,
+          commentable_type: null,
           // user_id: null,
           target_user_id: null,
           target_comment_id: null,
@@ -111,10 +112,12 @@
       },
 
       addNewComment() {
-        this.createForm.post_id = this.postId;
+        this.createForm.commentable_id = this.commentableId;
+        this.createForm.commentable_type = this.commentableType;
         axios.post('/api/comments', this.createForm).then(response => {
           this.createForm.contents = '';
-          this.createForm.post_id = null;
+          this.createForm.commentable_id = null;
+          this.createForm.commentable_type = null;
           //this.createForm.user_id = null;
           this.createForm.target_user_id = null;
           this.createForm.target_comment_id = null;

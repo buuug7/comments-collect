@@ -11,7 +11,8 @@ class Comment extends Model
 
     protected $fillable = [
         'contents',
-        'post_id',
+        'commentable_id',
+        'commentable_type',
         'user_id',
         'target_user_id',
         'target_comment_id'
@@ -33,13 +34,9 @@ class Comment extends Model
     }
 
 
-    /**
-     * return the comment under which post
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function post()
+    public function commentable()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
     }
 
 

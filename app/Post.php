@@ -32,13 +32,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * the post comments
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany('App\Comment', 'commentable');
     }
 
 

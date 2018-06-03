@@ -31,7 +31,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,14 +42,16 @@ class CommentController extends Controller
 
         $comment = Comment::create([
             'contents' => $request->contents,
-            'post_id' => $request->post_id,
+            'commentable_id' => $request->commentable_id,
+            'commentable_type' => $request->commentable_type,
             'user_id' => $request->user()->id,
             'target_user_id' => $request->target_user_id,
             'target_comment_id' => $request->target_user_id,
         ]);
 
-
-        event(new PostCommented(Post::find($request->post_id), $comment));
+        if ($request->commentable_type == 'App\Post') {
+            event(new PostCommented(Post::find($request->commentable_id), $comment));
+        }
 
         $result = $comment->load('user');
 
@@ -59,7 +61,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function show(Comment $comment)
@@ -72,8 +74,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -84,7 +86,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comment  $comment
+     * @param  \App\Comment $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)
@@ -125,7 +127,8 @@ class CommentController extends Controller
 
         $replyComment = Comment::create([
             'contents' => $request->contents,
-            'post_id' => $request->post_id,
+            'commentable_id' => $request->commentable_id,
+            'commentable_type' => $request->commentable_type,
             'user_id' => $request->user()->id,
             'target_user_id' => $request->target_user_id,
             'target_comment_id' => $comment->id,
