@@ -51,7 +51,7 @@ Route::post('/notifications/{id}/read', 'API\NotificationController@markAsRead')
 //
 // User
 //
-Route::get('/users','API\UserController@index');
+Route::get('/users', 'API\UserController@index');
 
 Route::get('/users/{email}', 'API\UserController@show');
 
@@ -68,3 +68,24 @@ Route::get('/user/comments', 'API\UserController@comments');
 Route::get('/user/comments/liked', 'API\UserController@likedComments');
 
 Route::get('/user/notifications', 'API\UserController@notifications');
+
+
+//
+// test react ,temp
+//
+
+Route::get('/test/react/posts', function () {
+    $posts = \App\Post::with(['user', 'tags', 'comments'])->latest()->paginate(5);
+    return response()
+        ->json($posts)
+        ->header('Access-Control-Allow-Origin', '*');
+});
+
+Route::get('/test/react/posts/{post}/comments', function (\App\Post $post) {
+    $result = $post->comments()
+        ->latest()
+        ->with('user', 'targetUser', 'targetComment')
+        ->paginate(5);
+    return response()->json($result)
+        >header('Access-Control-Allow-Origin', '*');
+});
